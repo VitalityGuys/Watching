@@ -338,7 +338,13 @@ public class PlayActivity extends AppCompatActivity {
         mToolbarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                convertToPortScreen();
+                if(currentOriention_LANDSCAPE){
+                    convertToPortScreen();
+                }else {
+                    mVideoView.stopPlayback();
+                    PlayActivity.this.finish();
+                }
+
             }
         });
 
