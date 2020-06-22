@@ -122,10 +122,10 @@ public class PlayActivity extends AppCompatActivity {
             mVideoView.setMediaController(myMediaController);
             mVideoView.setHudView(mHudView);
             mVideoView.start();
-            mPlaySourceSwitch.setVisibility(View.INVISIBLE);
-            findViewById(R.id.gridlayout).setVisibility(View.INVISIBLE);
-            findViewById(R.id.videodetaillayout).setVisibility(View.INVISIBLE);
-            findViewById(R.id.playinginfo).setVisibility(View.INVISIBLE);
+            mPlaySourceSwitch.setVisibility(View.GONE);
+            findViewById(R.id.gridlayout).setVisibility(View.GONE);
+            findViewById(R.id.videodetaillayout).setVisibility(View.GONE);
+            findViewById(R.id.playinginfo).setVisibility(View.GONE);
 //            findViewById(R.id.rotationSwitch).setVisibility(View.INVISIBLE);
 //            findViewById(R.id.autorotation_tips).setVisibility(View.INVISIBLE);
 

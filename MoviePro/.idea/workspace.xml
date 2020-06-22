@@ -10,9 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44217109-e893-450f-980b-bdd39bdaf162" name="Default Changelist" comment="">
+<<<<<<< Updated upstream
       <change afterPath="$PROJECT_DIR$/app/src/main/res/xml/backup_descriptor.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +28,11 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
+<<<<<<< Updated upstream
   <component name="ExecutionTargetManager" SELECTED_TARGET="5c1b6a5e" />
+=======
+  <component name="ExecutionTargetManager" SELECTED_TARGET="1B99C89D" />
+>>>>>>> Stashed changes
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -34,6 +43,7 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="145">
@@ -53,6 +63,37 @@
               <caret line="1" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
+=======
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="366">
+              <caret line="128" column="50" selection-start-line="128" selection-start-column="50" selection-end-line="128" selection-end-column="50" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#6365#7556#0" />
+                <element signature="e#7562#9095#0" />
+                <element signature="e#12195#12482#0" expanded="true" />
+                <element signature="e#12481#12482#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="294">
+              <caret line="304" column="33" lean-forward="true" selection-start-line="304" selection-start-column="33" selection-end-line="304" selection-end-column="33" />
+              <folding>
+                <element signature="e#716#2210#0" />
+                <element signature="e#987#2164#0" />
+                <element signature="e#2241#2495#0" />
+                <element signature="e#4688#12789#0" />
+              </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
+>>>>>>> Stashed changes
         </entry>
       </file>
     </leaf>
@@ -72,7 +113,11 @@
     <option name="BUILD_TARGET_KEY" value="apk" />
   </component>
   <component name="Git.Settings">
+<<<<<<< Updated upstream
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+=======
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+>>>>>>> Stashed changes
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -109,6 +154,7 @@
         <option value="$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/MyMediaController.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Base/VideoInfo.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/SearchActivity.java" />
+<<<<<<< Updated upstream
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml" />
         <option value="$PROJECT_DIR$/ijkplayer-example/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/ijkplayer-example/src/main/res/layout/media_my_controller.xml" />
@@ -116,6 +162,14 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/xml/backup_descriptor.xml" />
+=======
+        <option value="$PROJECT_DIR$/ijkplayer-example/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/ijkplayer-example/src/main/res/layout/media_my_controller.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Utils/ParseHtml.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml" />
+>>>>>>> Stashed changes
       </list>
     </option>
   </component>
@@ -131,8 +185,22 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< Updated upstream
       <pane id="ProjectPane" />
       <pane id="PackagesPane" />
+=======
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="MoviePro" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MoviePro" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+>>>>>>> Stashed changes
       <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
@@ -175,6 +243,15 @@
               <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
+<<<<<<< Updated upstream
+=======
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+>>>>>>> Stashed changes
               <item name="mipmap" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
@@ -188,12 +265,68 @@
               <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
+<<<<<<< Updated upstream
               <item name="xml" type="ddeffd01:AndroidResFolderTypeNode" />
+=======
+              <item name="mipmap" type="ddeffd01:AndroidResFolderTypeNode" />
+              <item name="ic_launcher_round" type="c431d0b8:AndroidResGroupNode" />
+            </path>
+            <path>
+              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="values" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
+              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
+              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
+              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="example" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
+              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="example" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="widget" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
+              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="example" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="widget" type="462c0819:PsiDirectoryNode" />
+              <item name="media" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
+              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
+              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
+>>>>>>> Stashed changes
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+<<<<<<< Updated upstream
+=======
+      <pane id="PackagesPane" />
+>>>>>>> Stashed changes
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -203,11 +336,19 @@
     <property name="ExportApk.SignV2" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+<<<<<<< Updated upstream
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+=======
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+>>>>>>> Stashed changes
   </component>
   <component name="RecentsManager">
     <key name="android.template.packageName">
@@ -368,6 +509,7 @@
       <option name="project" value="LOCAL" />
       <updated>1592821141233</updated>
     </task>
+<<<<<<< Updated upstream
     <task id="LOCAL-00002" summary="更改图标">
       <created>1592822794486</created>
       <option name="number" value="00002" />
@@ -384,6 +526,17 @@
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.19900222" />
+=======
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.32995737" />
+>>>>>>> Stashed changes
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -397,24 +550,40 @@
       <window_info anchor="bottom" id="Find" order="3" weight="0.32832617" />
       <window_info anchor="bottom" id="Terminal" order="4" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
+<<<<<<< Updated upstream
       <window_info anchor="bottom" id="Version Control" order="6" weight="0.32939914" />
       <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.17255718" />
+=======
+      <window_info anchor="bottom" id="Version Control" order="6" visible="true" weight="0.32939914" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.32939914" />
+>>>>>>> Stashed changes
       <window_info anchor="bottom" id="Debug" order="8" />
       <window_info anchor="bottom" id="Android Profiler" order="9" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
       <window_info anchor="right" id="Theme Preview" order="3" />
+<<<<<<< Updated upstream
       <window_info anchor="right" id="Preview" order="4" weight="0.32982263" />
+=======
+      <window_info anchor="right" id="Preview" order="4" />
+>>>>>>> Stashed changes
       <window_info anchor="right" id="Palette&#9;" order="5" />
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="修复竖屏模式下回退图标不生效问题" />
+<<<<<<< Updated upstream
     <MESSAGE value="更改图标" />
     <option name="LAST_COMMIT_MESSAGE" value="更改图标" />
   </component>
   <component name="editorHistoryManager">
+=======
+    <option name="LAST_COMMIT_MESSAGE" value="修复竖屏模式下回退图标不生效问题" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/application/AppActivity.java" />
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/content/PathCursorLoader.java" />
     <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/content/RecentMediaStorage.java" />
     <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/fragments/FileListFragment.java" />
@@ -514,6 +683,17 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Base/PlayLink.java">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+<<<<<<< Updated upstream
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/videolist.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Utils/HttpUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
@@ -521,6 +701,17 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="44" column="42" selection-start-line="44" selection-start-column="42" selection-end-line="44" selection-end-column="42" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+>>>>>>> Stashed changes
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.appcompat/appcompat/1.0.0/1deaac9c124b19a14ebaf64780e7087d561541bd/appcompat-1.0.0-sources.jar!/androidx/appcompat/widget/Toolbar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -535,7 +726,17 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/view/View.java" />
+=======
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/view/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="33">
+          <caret line="17952" column="19" selection-start-line="17952" selection-start-column="19" selection-end-line="17952" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> Stashed changes
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.appcompat/appcompat/1.0.0/1deaac9c124b19a14ebaf64780e7087d561541bd/appcompat-1.0.0-sources.jar!/androidx/appcompat/app/ActionBar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -543,7 +744,21 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/view/MotionEvent.java" />
+=======
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/view/MotionEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="2057" column="21" selection-start-line="2057" selection-start-column="21" selection-end-line="2057" selection-end-column="21" />
+          <folding>
+            <element signature="e#84615#84616#0" expanded="true" />
+            <element signature="e#84665#84666#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/IMediaController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -551,7 +766,20 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/widget/MediaController.java" />
+=======
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/widget/MediaController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1221">
+          <caret line="143" column="26" selection-start-line="143" selection-start-column="26" selection-end-line="143" selection-end-column="26" />
+          <folding>
+            <element signature="docComment;class#MediaController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/AndroidMediaController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -562,7 +790,17 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/view/Window.java" />
+=======
+    <entry file="file://$USER_HOME$/AppData/Local/Android/Sdk/sources/android-29/android/view/Window.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="1705" column="34" selection-start-line="1705" selection-start-column="34" selection-end-line="1705" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Base/VideoDetail.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -622,18 +860,31 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/res/layout/media_my_controller.xml">
+<<<<<<< Updated upstream
       <provider editor-type-id="android-designer2" />
+=======
+>>>>>>> Stashed changes
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
           <caret line="19" column="37" lean-forward="true" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
         </state>
       </provider>
+<<<<<<< Updated upstream
+=======
+      <provider editor-type-id="android-designer2" />
+>>>>>>> Stashed changes
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2970" />
       </provider>
     </entry>
+<<<<<<< Updated upstream
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+>>>>>>> Stashed changes
     <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -656,6 +907,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Utils/ParseHtml.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1821">
@@ -687,12 +939,43 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="841">
           <caret line="44" column="42" selection-start-line="44" selection-start-column="42" selection-end-line="44" selection-end-column="42" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="3" column="63" selection-start-line="3" selection-start-column="63" selection-end-line="3" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Utils/ParseHtml.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1821">
+          <caret line="23" column="27" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Adapter/VideoAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="1218">
+=======
+        <state relative-caret-position="570">
+>>>>>>> Stashed changes
           <caret line="42" column="63" lean-forward="true" selection-start-line="42" selection-start-column="63" selection-end-line="42" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -702,17 +985,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="432">
           <caret line="338" column="11" selection-start-line="338" selection-start-column="11" selection-end-line="338" selection-end-column="11" />
+=======
+        <state relative-caret-position="366">
+          <caret line="128" column="50" selection-start-line="128" selection-start-column="50" selection-end-line="128" selection-end-column="50" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#6365#7556#0" />
             <element signature="e#7562#9095#0" />
+<<<<<<< Updated upstream
             <element signature="e#12539#12540#0" expanded="true" />
+=======
+            <element signature="e#12195#12482#0" expanded="true" />
+            <element signature="e#12481#12482#0" expanded="true" />
+>>>>>>> Stashed changes
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="87">
@@ -743,6 +1037,21 @@
           <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
+=======
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="304" column="33" lean-forward="true" selection-start-line="304" selection-start-column="33" selection-end-line="304" selection-end-column="33" />
+          <folding>
+            <element signature="e#716#2210#0" />
+            <element signature="e#987#2164#0" />
+            <element signature="e#2241#2495#0" />
+            <element signature="e#4688#12789#0" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+>>>>>>> Stashed changes
     </entry>
   </component>
 </project>
