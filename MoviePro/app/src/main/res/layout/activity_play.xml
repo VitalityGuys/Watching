@@ -66,6 +66,32 @@ tools:context=".PlayActivity">
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             style="?android:attr/progressBarStyle"/>
+
+        <!--亮度进度条-->
+        <SeekBar
+            android:id="@+id/brightnessSeekBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="150dp"
+            android:layout_height="10dp"
+            android:max="100"
+            android:progress="0"
+            android:rotation="270"
+            android:layout_gravity="end|center_vertical"
+            android:visibility="invisible"
+            />
+
+        <!--亮度进度条-->
+        <SeekBar
+            android:id="@+id/volumeSeekBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="150dp"
+            android:layout_height="10dp"
+            android:max="100"
+            android:progress="0"
+            android:rotation="270"
+            android:layout_gravity="start|center_vertical"
+            android:visibility="invisible"
+            />
     </FrameLayout>
 
 
