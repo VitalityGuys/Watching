@@ -9,14 +9,20 @@
     <!--搜索框-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dip"
         android:orientation="horizontal">
+        <Spinner
+            android:id="@+id/mSpinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:entries="@array/playsource"/>
         <!--搜索关键词输入框-->
         <EditText
             android:id="@+id/search_edit"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
             android:background="@null"
             android:maxLines="1"
             android:maxLength="15"
@@ -25,8 +31,8 @@
         <!--搜索按钮-->
         <Button
             android:id="@+id/search_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="搜索"/>
 

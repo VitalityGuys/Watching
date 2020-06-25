@@ -15,6 +15,7 @@ public class VideoDetail {
 
     private ArrayList<PlayLink> playlists_m3u8=new ArrayList<PlayLink>();
     private ArrayList<PlayLink> playlists_mp4=new ArrayList<PlayLink>();
+    private ArrayList<PlayLink> playlists_web=new ArrayList<PlayLink>();
 
     public String getVideoname() {
         return videoname;
@@ -94,6 +95,14 @@ public class VideoDetail {
 
     public void setPlaylists_mp4(ArrayList<PlayLink> playlists_mp4) {
         this.playlists_mp4 = playlists_mp4;
+    }
+
+    public ArrayList<PlayLink> getPlaylists_web() {
+        return playlists_web;
+    }
+
+    public void setPlaylists_web(ArrayList<PlayLink> playlists_web) {
+        this.playlists_web = playlists_web;
     }
 
     @Override

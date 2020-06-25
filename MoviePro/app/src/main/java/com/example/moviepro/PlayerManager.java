@@ -36,6 +36,12 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 public class PlayerManager {
+
+    private final int SCALE_16_9 = 0;
+    private final int SCALE_4_3 = 1;
+    private final int SCALE_1_1 = 2;
+    private int MY_DEVICE_SCALE=SCALE_16_9;
+
     private Activity mActivity;
     private IjkVideoView mVideoView;
     private TableLayout mHubView;
@@ -64,7 +70,7 @@ public class PlayerManager {
 
     public PlayerManager(Activity mActivity) {
 
-        init();
+
         IjkMediaPlayer.loadLibrariesOnce(null);                 //初始化ijkplayer
         IjkMediaPlayer.native_profileBegin("libijkplayer.so");
 
@@ -87,13 +93,22 @@ public class PlayerManager {
         mVideoView.setHudView(mHubView);
 
         setListener();
-
-
+        initMY_DEVICE_SCALE();
+        setVideoScale(MY_DEVICE_SCALE);
     }
 
-    private void init(){
-
+    private void initMY_DEVICE_SCALE(){
+        initScreenInfo();
+        double scale=(screenWidth*1.0)/screenHeight;
+        if(scale-(9/16.0)<0.00000001){
+            MY_DEVICE_SCALE=SCALE_16_9;
+        }else if(scale-(3/4.0)<0.00000001){
+            MY_DEVICE_SCALE=SCALE_4_3;
+        }else if((scale-1.0)<0.00000001){
+            MY_DEVICE_SCALE=SCALE_1_1;
+        }
     }
+
     public void setLive(boolean live) {
         isLive = live;
     }
@@ -119,9 +134,11 @@ public class PlayerManager {
                     if((orientation>150&&orientation<210)||(orientation>330||orientation<30)){//竖屏 自适应
 //                        convertToPortScreen();
                         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+                        setVideoScale(MY_DEVICE_SCALE);
                     }else if((orientation>240&&orientation<300)||(orientation>60&&orientation<120)){//横屏 自适应
 //                        convertToLandScreen();
                         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+                        setVideoScale(MY_DEVICE_SCALE);
                     }
                 }
             }
@@ -144,6 +161,8 @@ public class PlayerManager {
                 volumeSeekBar=mActivity.findViewById(R.id.volumeSeekBar);
                 //加载成功，进度条不可见
                 mLoadVideoProgressbar.setVisibility(View.INVISIBLE);
+
+
                 //开始播放视频
                 mp.start();
 
@@ -252,6 +271,7 @@ public class PlayerManager {
     private void initScreenInfo(){
         screenWidth=((WindowManager) mActivity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
         screenHeight= ((WindowManager) mActivity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
+
     }
 
 
@@ -260,26 +280,41 @@ public class PlayerManager {
         currentOriention_LANDSCAPE =false;
         mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//设置videoView竖屏播放
-        initScreenInfo();
-        int height=screenHeight;
-        int width=screenWidth;
-        FrameLayout relativeLayout=mActivity.findViewById(R.id.media_box);
-        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(width,width*9/16);
-        relativeLayout.setLayoutParams(params);
+//        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        setVideoScale(MY_DEVICE_SCALE);
 
     }
 
     //全屏播放
     private void convertToLandScreen() {
         currentOriention_LANDSCAPE =true;
+        mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//设置videoView横屏播放
+//        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        setVideoScale(MY_DEVICE_SCALE);
+    }
+
+    private void setVideoScale(int scale){
         initScreenInfo();
         int height=screenHeight;
         int width=screenWidth;
         FrameLayout relativeLayout=mActivity.findViewById(R.id.media_box);
-        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(width,height);
-        relativeLayout.setLayoutParams(layoutParams);
-        mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        LinearLayout.LayoutParams params=null;
+        switch (scale){
+            case SCALE_16_9:
+                params=new LinearLayout.LayoutParams(width,width*9/16);
+                break;
+            case SCALE_4_3:
+                params=new LinearLayout.LayoutParams(width,width*3/4);
+                break;
+            case SCALE_1_1:
+                params=new LinearLayout.LayoutParams(width,width);
+                break;
+            default:
+                break;
+        }
+//        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(width,width*9/16);
+        relativeLayout.setLayoutParams(params);
     }
 
 

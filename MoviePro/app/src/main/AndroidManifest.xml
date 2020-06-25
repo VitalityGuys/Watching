@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.moviepro">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         tools:replace="android:theme"
@@ -12,6 +16,7 @@
         android:theme="@style/AppTheme.NoActionBar"
         android:fullBackupContent="@xml/backup_descriptor">
         <activity android:name=".PlayActivity"
+            android:hardwareAccelerated="true"
             android:configChanges="orientation|screenSize">
         </activity>
         <activity android:name=".SearchActivity">

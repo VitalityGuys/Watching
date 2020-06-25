@@ -12,7 +12,7 @@ tools:context=".PlayActivity">
     <FrameLayout
         android:id="@+id/media_box"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="260dip">
 
         <!--播放器-->
         <tv.danmaku.ijk.media.example.widget.media.IjkVideoView
@@ -94,8 +94,6 @@ tools:context=".PlayActivity">
             />
     </FrameLayout>
 
-
-
     <!--当前正在播放集数-->
     <LinearLayout
         android:id="@+id/playinginfo"
@@ -119,43 +117,8 @@ tools:context=".PlayActivity">
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-        <!--切换播放源-->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="切换mp4"/>
-
-            <Switch
-                android:id="@+id/playsourceSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"/>
-        </LinearLayout>
-
 
     </LinearLayout>
-
-    <!--选集-->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-        <!--选集-->
-        <GridLayout
-            android:id="@+id/gridlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
-        </GridLayout>
-    </ScrollView>
-
-
-
 
     <!--垂直滚动视图 视频详情-->
     <ScrollView
@@ -165,7 +128,6 @@ tools:context=".PlayActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <!--视频详情-->
             <LinearLayout
                 android:id="@+id/videodetaillayout"
@@ -183,7 +145,7 @@ tools:context=".PlayActivity">
                     android:layout_gravity="center_horizontal"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:text="喜羊羊与灰太狼之虎虎生威"/>
+                    android:text=""/>
 
                 <!--封面及类型之类的-->
                 <LinearLayout
@@ -224,7 +186,7 @@ tools:context=".PlayActivity">
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="16sp"
-                                android:text="动漫片" />
+                                android:text="" />
                         </LinearLayout>
                         <!--地区-->
                         <LinearLayout
@@ -241,7 +203,7 @@ tools:context=".PlayActivity">
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="16sp"
-                                android:text="大陆"/>
+                                android:text=""/>
                         </LinearLayout>
                         <!--语言-->
                         <LinearLayout
@@ -258,7 +220,7 @@ tools:context=".PlayActivity">
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="16sp"
-                                android:text="国语"/>
+                                android:text=""/>
 
                         </LinearLayout>
                         <!--导演-->
@@ -276,7 +238,7 @@ tools:context=".PlayActivity">
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="16sp"
-                                android:text="赵崇邦"/>
+                                android:text=""/>
                         </LinearLayout>
                         <!--主演-->
                         <LinearLayout
@@ -294,7 +256,7 @@ tools:context=".PlayActivity">
                                 android:layout_height="wrap_content"
                                 android:textSize="16sp"
                                 android:maxLength="30"
-                                android:text="谢天华,王祖蓝,邓丽欣,麦长青"/>
+                                android:text=""/>
                         </LinearLayout>
 
 
@@ -309,8 +271,8 @@ tools:context=".PlayActivity">
                     android:orientation="vertical">
                     <!--简介标题-->
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:textSize="20sp"
                         android:layout_gravity="center_horizontal"
                         android:text="影片简介"/>
@@ -323,10 +285,59 @@ tools:context=".PlayActivity">
                         android:layout_marginBottom="20dp"
                         android:lineSpacingMultiplier="1.5"
                         android:textSize="18sp"
-                        android:text="\u3000\u3000在一个月黑风高的夜晚，灰太狼（张琳 配音）和一众同伴相约，杀进羊村捕捉小肥羊，为老婆和孩子送上情人节的饕餮大宴——涮羊锅。与此同时，羊村正在举行大白菜成功培育一千周年的庆典，节日的欢乐气氛却被突如其来的灰太狼所破坏。正当灰太狼与喜羊羊（祖丽晴 配音）激战正酣之际，狂暴骄纵的虎威太岁（贾译 配音）率领众多手下来到羊村，扬言要在这里修建游乐场。转眼之间一座豪华的游乐场拔地而起，小肥羊们被迫沦为这里的工人，连高傲自大的灰太狼也难以幸免。面对这个突如其来的虎威太岁，羊羊和灰太狼被迫联手……本片荣获2010年第十六届上海电视节国产动画片白玉兰金奖、2010第七届金龙奖最佳动画长片奖等多个奖项。"/>
+                        android:text=""/>
                 </LinearLayout>
             </LinearLayout>
 
+            <!--选集-->
+            <LinearLayout
+                android:id="@+id/xuanji"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20sp"
+                    android:text="m3u8播放源"/>
+                <GridLayout
+                    android:id="@+id/gridlayoutm3u8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                </GridLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20sp"
+                    android:text="mp4播放源"/>
+                <GridLayout
+                    android:id="@+id/gridlayoutmp4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                </GridLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="20sp"
+                    android:text="跳转浏览器播放"/>
+                <GridLayout
+                    android:id="@+id/gridlayoutweb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                </GridLayout>
+            </LinearLayout>
+
+            <!--视频调试信息-->
             <TableLayout
                 android:id="@+id/hud_view"
                 android:layout_width="match_parent"
@@ -335,9 +346,5 @@ tools:context=".PlayActivity">
                 android:background="#e5ffe5"/>
         </LinearLayout>
     </ScrollView>
-
-
-
-
 
 </LinearLayout>

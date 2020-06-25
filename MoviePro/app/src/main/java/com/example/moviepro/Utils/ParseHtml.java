@@ -21,7 +21,7 @@ public class ParseHtml {
         Document document= Jsoup.parse(html);
         Elements elements=document.getElementsByClass("xing_vb4");
         Elements videotype=document.getElementsByClass("xing_vb5");
-        Elements updatetime=document.getElementsByClass("xing_vb6");
+//        Elements updatetime=document.getElementsByClass("xing_vb6");
 
 
         ArrayList arrayList=new ArrayList();
@@ -81,21 +81,54 @@ public class ParseHtml {
         Elements coverimg=document.select(".warp div:nth-child(1) .vodImg img");
 //        System.out.println("影片封面："+coverimg.attr("src"));
 
-        //获取m3u8播放链接
-        Elements elements=document.select("#play_1 ul li");
+        //获取播放链接
+        Elements elements=document.select(".vodplayinfo ul li");
         for(Element element:elements){
-            String[]content=element.text().split("\\$");
-            videoDetail.getPlaylists_m3u8().add(new PlayLink(content[0],content[1]));
-            System.out.println(element.text());
+            String []tmp=element.text().split(" ");
+            String[]content=tmp[0].split("\\$");
+            String string=content[1];
+            String s=string.substring(string.length()-4);
+            if(s.equals("m3u8")){
+                videoDetail.getPlaylists_m3u8().add(new PlayLink(content[0],content[1]));
+            }else if(s.equals(".mp4")){
+                videoDetail.getPlaylists_mp4().add(new PlayLink(content[0],content[1]));
+            }else{
+                videoDetail.getPlaylists_web().add(new PlayLink(content[0],content[1]));
+            }
+//            System.out.println(element.text());
         }
 
-        //获取mp4播放链接
-        elements=document.select("#down_1 ul li");
-        for(Element element:elements){
-            String[]content=element.text().split("\\$");
-            videoDetail.getPlaylists_mp4().add(new PlayLink(content[0],content[1]));
-            System.out.println(element.text());
-        }
+
+//        //获取播放链接
+//        elements=document.select("#play_2 ul li");
+//        for(Element element:elements){
+//            String[]content=element.text().split("\\$");
+//            String string=content[1];
+//            String s=string.substring(string.length()-4);
+//            if(s.equals("m3u8")){
+//                videoDetail.getPlaylists_m3u8().add(new PlayLink(content[0],content[1]));
+//            }else if(s.equals(".mp4")){
+//                videoDetail.getPlaylists_mp4().add(new PlayLink(content[0],content[1]));
+//            }
+////            System.out.println(element.text());
+//        }
+//
+//
+//
+//
+//        //获取mp4播放链接
+//        elements=document.select("#down_1 ul li");
+//        for(Element element:elements){
+//            String[]content=element.text().split("\\$");
+//            String string=content[1];
+//            String s=string.substring(string.length()-4);
+//            if(s.equals("m3u8")){
+//                videoDetail.getPlaylists_m3u8().add(new PlayLink(content[0],content[1]));
+//            }else if(s.equals(".mp4")){
+//                videoDetail.getPlaylists_mp4().add(new PlayLink(content[0],content[1]));
+//            }
+////            System.out.println(element.text());
+//        }
 
 
 
@@ -113,4 +146,5 @@ public class ParseHtml {
         return videoDetail;
 
     }
+
 }

@@ -797,6 +797,18 @@ public class MyMediaController extends FrameLayout {
         mRotationSwitch.setOnCheckedChangeListener(rotationSwitchListener);
     }
 
+    //直播时隐藏进度条
+    public void hideProgressBar(boolean hide){
+        if(mProgress!=null){
+            if(hide){
+                mProgress.setVisibility(GONE);
+            }else {
+                mProgress.setVisibility(VISIBLE);
+            }
+        }
+
+    }
+
 
     private ArrayList<View> mShowOnceArray = new ArrayList<View>();
     public void showOnce(@NonNull View view) {

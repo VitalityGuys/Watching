@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,13 +36,16 @@ public class SearchActivity extends AppCompatActivity {
     EditText mSearch_edit;
     Button mSearchButton;
     ListView listView;
-
+    private Spinner mSpinner;
+    String[] spinnerItems={"最大资源网","OK资源网","速播资源网","最新资源网","麻花资源网","135资源网"};
+    private int selectedItemIdx=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
         findView();
+        setSpinner();
 
         initlive();
 
@@ -92,7 +97,15 @@ public class SearchActivity extends AppCompatActivity {
     private void findView(){
         mSearch_edit=(EditText) findViewById(R.id.search_edit);
         mSearchButton=findViewById(R.id.search_button);
+        mSpinner=findViewById(R.id.mSpinner);
         listView=(ListView)findViewById(R.id.videolist);
+    }
+
+    private void setSpinner(){
+
+        ArrayAdapter<String> spinnerAdapter=new ArrayAdapter<>(SearchActivity.this,android.R.layout.simple_spinner_item,spinnerItems);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(spinnerAdapter);
     }
 
     //添加监听
@@ -113,6 +126,25 @@ public class SearchActivity extends AppCompatActivity {
                 search_video();
             }
         });
+
+        //播放源监听
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
+                selectedItemIdx=position;
+//                Toast.makeText(SearchActivity.this,position+"当前选中："+spinnerItems[position],Toast.LENGTH_SHORT).show();
+
+                if(position==4||position==5){
+                    Toast.makeText(SearchActivity.this,position+"当前选中的不可用，请更换其他源",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedItemIdx=0;
+            }
+        });
     }
 
 
@@ -120,12 +152,32 @@ public class SearchActivity extends AppCompatActivity {
     private void search_video(){
         String keyword=mSearch_edit.getText().toString();
         Toast.makeText(SearchActivity.this,"搜索词："+keyword,Toast.LENGTH_SHORT).show();
+
+        if(selectedItemIdx==0){
+            search_zy(keyword,"http://www.zuidazy5.com");
+        }else if(selectedItemIdx==1){
+            search_zy(keyword,"https://www.okzy.co");
+        }else if(selectedItemIdx==2){
+            search_zy(keyword,"https://www.subo988.com");
+        }else if(selectedItemIdx==3){
+            search_zy(keyword,"http://www.zuixinzy.net");
+        }else if(selectedItemIdx==4){
+            search_zy(keyword,"http://www.mahuazy.com");
+        }else if(selectedItemIdx==5){
+            search_zy(keyword,"http://135zy0.com");
+        }
+
+
+    }
+
+    //搜索资源
+    private void search_zy(String searchword, final String hostUrl){
         RequestBody requestBody=new FormBody.Builder()
                 .add("m","vod-search")
-                .add("wd",keyword)
+                .add("wd",searchword)
                 .add("submit","search")
                 .build();
-        HttpUtil.post("http://www.zuidazy5.com/index.php?m=vod-search", requestBody, new Callback() {
+        HttpUtil.post(hostUrl+"/index.php?m=vod-search", requestBody, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 runOnUiThread(new Runnable() {
@@ -155,7 +207,7 @@ public class SearchActivity extends AppCompatActivity {
                                 Toast.makeText(SearchActivity.this,videoInfo.getVideoname(),Toast.LENGTH_SHORT).show();
                                 //从当前页面跳转到播放页面，并将选中视频信息传递过去
                                 Intent intent=new Intent(SearchActivity.this,PlayActivity.class);
-                                intent.putExtra("url","http://www.zuidazy5.com"+videoInfo.getVideourl());
+                                intent.putExtra("url",hostUrl+videoInfo.getVideourl());
                                 intent.putExtra("type","video");
                                 startActivity(intent);
                             }
@@ -167,7 +219,7 @@ public class SearchActivity extends AppCompatActivity {
 //                        Log.d("tag", "onResponse: "+html);
             }
         });
-    }
 
+    }
 
 }

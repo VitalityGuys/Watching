@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Service;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.media.AudioManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -19,6 +23,9 @@ import android.view.Surface;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -41,6 +48,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -60,7 +68,6 @@ public class PlayActivity extends AppCompatActivity {
 
 
     //视频详细信息控件
-    private Switch mPlaySourceSwitch;
     private ImageView coverimg;
     private TextView videotype;
     private TextView videoname;
@@ -78,6 +85,13 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
+
+//        Uri uri = Uri.parse("https://yushou.qitu-zuida.com/share/c50b8d55acad50abed2b155f67fc56b3");
+//        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//        startActivity(intent);
+
+
+
         playerManager = new PlayerManager(this);
 
         //获取上个页面传递过来的视频详细链接
@@ -89,27 +103,18 @@ public class PlayActivity extends AppCompatActivity {
             playerManager.setLive(true);
             playerManager.setVideoUrl(url);
             playerManager.startPlay();
+            findViewById(R.id.playinginfo).setVisibility(View.GONE);
+            findViewById(R.id.videodetaillayout).setVisibility(View.GONE);
+            findViewById(R.id.xuanji).setVisibility(View.GONE);
         }else if(type.equals("video")){
             playerManager.setLive(false);
-            //获取视频并进行相关处理
             findView();
             getVideodata(url);
-            //监听切换播放源开关
-            mPlaySourceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    //切换为mp4
-                    enablem3u8= !isChecked;
-                    switchPlaylist();
-                    playerManager.showLoadProgressBar(true);
-                }
-            });
         }
 
-
-
-
     }
+
+
 
 
     @Override
@@ -121,19 +126,24 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        playerManager.showMediaController();
+        if(playerManager!=null){
+            playerManager.showMediaController();
+        }
+
     }
 
 
     @Override
     public void onBackPressed() {
-        playerManager.backPressed();
+        if(playerManager!=null){
+            playerManager.backPressed();
+        }
+
     }
 
     //获取所有的全局控件
     private void findView(){
         //获取各个控件
-        mPlaySourceSwitch=findViewById(R.id.playsourceSwitch);
         coverimg=(ImageView)findViewById(R.id.videocover);
         videotype=findViewById(R.id.videotype);
         videoname=findViewById(R.id.videoname);
@@ -174,12 +184,19 @@ public class PlayActivity extends AppCompatActivity {
                     public void run() {
                         //获取视频详细信息
                         videoDetail= ParseHtml.parsedetailinfo(html);
-                        //设置播放列表（选集列表）
-                        setPlayList(videoDetail);
+
+                        GridLayout gridLayoutm3u8=(GridLayout)findViewById(R.id.gridlayoutm3u8);
+                        GridLayout gridLayoutmp4=(GridLayout)findViewById(R.id.gridlayoutmp4);
+                        GridLayout gridLayoutweb=(GridLayout)findViewById(R.id.gridlayoutweb);
+
+                        //设置m3u8播放列表（选集列表）
+                        setPlayList(videoDetail.getPlaylists_m3u8(),gridLayoutm3u8,false);
+                        setPlayList(videoDetail.getPlaylists_mp4(),gridLayoutmp4,false);
+                        setPlayList(videoDetail.getPlaylists_web(),gridLayoutweb,true);
+
                         //设置详细信息
                         setDetailInfo(videoDetail);
-                        //提示信息
-                        Toast.makeText(PlayActivity.this,"正在加载，请稍后",Toast.LENGTH_LONG).show();
+
                     }
                 });
             }
@@ -187,22 +204,12 @@ public class PlayActivity extends AppCompatActivity {
     }
 
     //设置视频的选集列表
-    private void setPlayList(VideoDetail videoDetail){
-        final GridLayout gridLayout=(GridLayout)findViewById(R.id.gridlayout);
+    private void setPlayList(final ArrayList<PlayLink> PlayList,final GridLayout gridLayout,boolean isweb){
+
         GridLayout.LayoutParams params = null;
-        //移除该布局上的所有控件
-        gridLayout.removeAllViews();
+
         int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
-
-        final ArrayList<PlayLink> tmp;
-        if(enablem3u8){
-            tmp=videoDetail.getPlaylists_m3u8();
-        }else {
-            tmp=videoDetail.getPlaylists_mp4();
-        }
-//      final ArrayList<PlayLink> tmp=videoDetail.getPlaylists_mp4();
-
-        int length=tmp.size();
+        int length=PlayList.size();
         int i,j,k=0;
         for(i=0;i<length/4+1;i++){
             for(j=0;j<4;j++){
@@ -210,8 +217,8 @@ public class PlayActivity extends AppCompatActivity {
                     break;
                 }
                 final Button button=new Button(PlayActivity.this);
-                button.setText(tmp.get(k).getVideonum());
-                button.setWidth((screenWidth-60)/4);
+                button.setText(PlayList.get(k).getVideonum());
+                button.setWidth((int) ((screenWidth-60)/4.0));
                 if(k==0){
                     button.setBackgroundColor(Color.parseColor("#fb7299"));
                 }
@@ -223,21 +230,49 @@ public class PlayActivity extends AppCompatActivity {
                 params.setMargins(5, 5, 5, 5);
                 final int index=k;
 
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        playerManager.setVideoUrl(tmp.get(index).getVideourl());
-                        for (int i = 0; i < gridLayout.getChildCount(); i++) {//清空所有背景色
-                            Button b = (Button) gridLayout.getChildAt(i);
-                            b.setBackgroundColor(Color.parseColor("#d6d7d7"));
+                if(isweb){
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Uri uri = Uri.parse(PlayList.get(index).getVideourl());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
                         }
-                        //设置选中的按钮背景色
-                        button.setBackgroundColor(Color.parseColor("#fb7299"));
-                        playnum.setText(tmp.get(index).getVideonum());
-                        Toast.makeText(PlayActivity.this,"正在加载"+tmp.get(index).getVideonum(),Toast.LENGTH_SHORT).show();
+                    });
+                }else {
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            playerManager.setVideoUrl(PlayList.get(index).getVideourl());
+                            playerManager.setVideoTitle(videoDetail.getVideoname()+" "+PlayList.get(index).getVideonum());
 
+                            for (int i = 0; i < gridLayout.getChildCount(); i++) {//清空所有背景色
+                                Button b = (Button) gridLayout.getChildAt(i);
+                                b.setBackgroundColor(Color.parseColor("#d6d7d7"));
+                            }
+                            //设置选中的按钮背景色
+                            button.setBackgroundColor(Color.parseColor("#fb7299"));
+                            playnum.setText(PlayList.get(index).getVideonum());
+                            Toast.makeText(PlayActivity.this,"正在加载"+PlayList.get(index).getVideonum(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                //长按复制播放链接
+                button.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        //获取剪贴板管理器：
+                        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        // 创建普通字符型ClipData
+                        ClipData mClipData = ClipData.newRawUri("Label", Uri.parse(PlayList.get(index).getVideourl()));
+                        // 将ClipData内容放到系统剪贴板里。
+                        cm.setPrimaryClip(mClipData);
+                        Toast.makeText(PlayActivity.this,"复制"+PlayList.get(index).getVideonum()+"链接成功，快去使用吧！！！",Toast.LENGTH_SHORT).show();
+                        return true;
                     }
                 });
+
                 gridLayout.addView(button,params);
                 k++;
             }
@@ -246,36 +281,31 @@ public class PlayActivity extends AppCompatActivity {
 
     //设置视频的详细信息，并添加播放链接
     private void setDetailInfo(VideoDetail videoDetail){
-        Glide.with(PlayActivity.this).load(videoDetail.getCoverimage()).into(coverimg);
 
-        if(enablem3u8){
+
+        if(videoDetail.getPlaylists_m3u8().size()>0){
             playerManager.setVideoUrl(videoDetail.getPlaylists_m3u8().get(0).getVideourl());
             playerManager.setVideoTitle(videoDetail.getVideoname()+" "+videoDetail.getPlaylists_m3u8().get(0).getVideonum());
-            playnum.setText(videoDetail.getPlaylists_m3u8().get(0).getVideonum());
-        }else {
+        }else if(videoDetail.getPlaylists_mp4().size()>0){
             playerManager.setVideoUrl(videoDetail.getPlaylists_mp4().get(0).getVideourl());
             playerManager.setVideoTitle(videoDetail.getVideoname()+" "+videoDetail.getPlaylists_mp4().get(0).getVideonum());
-            playnum.setText(videoDetail.getPlaylists_mp4().get(0).getVideonum());
+        }else {//所有播放链接为空 退出
+            Toast.makeText(PlayActivity.this,"此影片无法播放，换个源试试",Toast.LENGTH_SHORT).show();
+            return;
         }
+        Glide.with(PlayActivity.this).load(videoDetail.getCoverimage()).into(coverimg);
+        playnum.setText(videoDetail.getPlaylists_m3u8().get(0).getVideonum());
+        videotype.setText(videoDetail.getVideotype());
+        videoname.setText(videoDetail.getVideoname());
+        videodirector.setText(videoDetail.getDirector());
+        videoactors.setText(videoDetail.getActors());
+        videoarea.setText(videoDetail.getArea());
+        videolanguage.setText(videoDetail.getLanguage());
+        videointroduce.setText("\u3000\u3000" +videoDetail.getIntroduce());
+        Toast.makeText(PlayActivity.this,"正在加载，请稍后",Toast.LENGTH_LONG).show();
 
-        //首次执行时加载
-        if(switchPlaysourceStatus){
-            videotype.setText(videoDetail.getVideotype());
-            videoname.setText(videoDetail.getVideoname());
-            videodirector.setText(videoDetail.getDirector());
-            videoactors.setText(videoDetail.getActors());
-            videoarea.setText(videoDetail.getArea());
-            videolanguage.setText(videoDetail.getLanguage());
-            videointroduce.setText("\u3000\u3000" +videoDetail.getIntroduce());
-        }
     }
 
-    //设置视频的选集列表和详细信息，并添加播放链接
-    private void switchPlaylist(){
-        setPlayList(videoDetail);
-        setDetailInfo(videoDetail);
-        switchPlaysourceStatus =false;
-    }
 
 
 }
