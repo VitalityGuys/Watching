@@ -117,7 +117,7 @@ public class ParseHtml {
             VideoInfo videoInfo=new VideoInfo();
             videoInfo.setVideoname(names.get(i).text());
             videoInfo.setVideotype(types.get(i).text());
-            videoInfo.setVideourl(links.get(i).attr("href"));
+            videoInfo.setVideourl(playSourceRule.getPlaysourceurl()+links.get(i).attr("href"));
             searchresult.add(videoInfo);
         }
 

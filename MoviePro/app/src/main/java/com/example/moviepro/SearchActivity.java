@@ -1,13 +1,13 @@
 package com.example.moviepro;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.effect.effects.SharpenEffect;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,12 +25,9 @@ import com.example.moviepro.Manager.PlaySourceRuleManager;
 import com.example.moviepro.Utils.HttpUtil;
 import com.example.moviepro.Utils.ParseHtml;
 import com.example.moviepro.bean.PlaySourceRule;
-import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,7 +42,7 @@ public class SearchActivity extends AppCompatActivity {
 
     EditText mSearch_edit;
     Button mSearchButton;
-    ListView listView;
+    RecyclerView recyclerView;
     private Spinner mSpinner;
 //    String[] spinnerItems={"最大资源网","OK资源网","速播资源网","最新资源网","麻花资源网","135资源网"};
 //    String[] spinnerItems={};
@@ -146,23 +143,25 @@ public class SearchActivity extends AppCompatActivity {
         videolist.add(new VideoInfo("cctv15 音乐","直播","http://120.241.133.167/outlivecloud-cdn.ysp.cctv.cn/cctv/2000205003.m3u8"));
         videolist.add(new VideoInfo("cctv17 农业农村","直播","http://ivi.bupt.edu.cn/hls/cctv17hd.m3u8"));
 
-        VideoAdapter videoAdapter=new VideoAdapter(SearchActivity.this,R.layout.videolist,videolist);
+        VideoAdapter videoAdapter=new VideoAdapter(videolist);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
-        listView.setAdapter(videoAdapter);
+        recyclerView.setAdapter(videoAdapter);
 
-        //监听listview中的每一项
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                VideoInfo videoInfo = videolist.get(position);
-//                Toast.makeText(SearchActivity.this,videoInfo.getVideoname(),Toast.LENGTH_SHORT).show();
-                //从当前页面跳转到播放页面，并将选中视频信息传递过去
-                Intent intent=new Intent(SearchActivity.this,PlayActivity.class);
-                intent.putExtra("url",videoInfo.getVideourl());
-                intent.putExtra("type","live");
-                startActivity(intent);
-            }
-        });
+//        //监听listview中的每一项
+//        recyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                VideoInfo videoInfo = videolist.get(position);
+////                Toast.makeText(SearchActivity.this,videoInfo.getVideoname(),Toast.LENGTH_SHORT).show();
+//                //从当前页面跳转到播放页面，并将选中视频信息传递过去
+//                Intent intent=new Intent(SearchActivity.this,PlayActivity.class);
+//                intent.putExtra("url",videoInfo.getVideourl());
+//                intent.putExtra("type","live");
+//                startActivity(intent);
+//            }
+//        });
     }
 
     //获取控件
@@ -170,7 +169,7 @@ public class SearchActivity extends AppCompatActivity {
         mSearch_edit=(EditText) findViewById(R.id.search_edit);
         mSearchButton=findViewById(R.id.search_button);
         mSpinner=findViewById(R.id.mSpinner);
-        listView=(ListView)findViewById(R.id.videolist);
+        recyclerView =(RecyclerView) findViewById(R.id.videolist);
     }
 
     private void setSpinner(){
@@ -274,23 +273,23 @@ public class SearchActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         final ArrayList<VideoInfo> videolist= ParseHtml.parsebaseinfo(html,currentplaySourceRule);
-                        VideoAdapter videoAdapter=new VideoAdapter(SearchActivity.this,R.layout.videolist,videolist);
-                        ListView listView=(ListView)findViewById(R.id.videolist);
-                        listView.setAdapter(videoAdapter);
+                        VideoAdapter videoAdapter=new VideoAdapter(videolist);
+                        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.videolist);
+                        recyclerView.setAdapter(videoAdapter);
 
                         //监听listview中的每一项
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                VideoInfo videoInfo = videolist.get(position);
-                                Toast.makeText(SearchActivity.this,videoInfo.getVideoname(),Toast.LENGTH_SHORT).show();
-                                //从当前页面跳转到播放页面，并将选中视频信息传递过去
-                                Intent intent=new Intent(SearchActivity.this,PlayActivity.class);
-                                intent.putExtra("url",currentplaySourceRule.getPlaysourceurl()+videoInfo.getVideourl());
-                                intent.putExtra("type","video");
-                                startActivity(intent);
-                            }
-                        });
+//                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                            @Override
+//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                                VideoInfo videoInfo = videolist.get(position);
+//                                Toast.makeText(SearchActivity.this,videoInfo.getVideoname(),Toast.LENGTH_SHORT).show();
+//                                //从当前页面跳转到播放页面，并将选中视频信息传递过去
+//                                Intent intent=new Intent(SearchActivity.this,PlayActivity.class);
+//                                intent.putExtra("url",currentplaySourceRule.getPlaysourceurl()+videoInfo.getVideourl());
+//                                intent.putExtra("type","video");
+//                                startActivity(intent);
+//                            }
+//                        });
 //                                Toast.makeText(indexActivity.this,"成功"+html,Toast.LENGTH_LONG).show();
                     }
                 });
