@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/quarterspeed"
+        android:title="0.25倍速"/>
+    <item
+        android:id="@+id/halfspeed"
+        android:title="0.5倍速"/>
+    <item
+        android:id="@+id/threequarterspeed"
+        android:title="0.75倍速"/>
+    <item
+        android:id="@+id/normalspeed"
+        android:title="1倍速"/>
+    <item
+        android:id="@+id/fivequarterspeed"
+        android:title="1.25倍速"/>
+    <item
+        android:id="@+id/sesquispeed"
+        android:title="1.5倍速"/>
+    <item
+        android:id="@+id/sevenquarterspeed"
+        android:title="1.75倍速"/>
+    <item
+        android:id="@+id/doublespeed"
+        android:title="2倍速"/>
+
+</menu>

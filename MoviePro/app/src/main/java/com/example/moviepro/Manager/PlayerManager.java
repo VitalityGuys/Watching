@@ -4,20 +4,25 @@ import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.SystemProperties;
+import android.util.Log;
 import android.view.GestureDetector;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TableLayout;
@@ -28,6 +33,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.moviepro.PlayActivity;
 import com.example.moviepro.R;
 
 import java.util.logging.LogRecord;
@@ -43,6 +49,7 @@ public class PlayerManager {
     private final int SCALE_4_3 = 1;
     private final int SCALE_1_1 = 2;
     private int MY_DEVICE_SCALE=SCALE_16_9;
+    private int VIDEO_SCALE=SCALE_16_9;
 
     private Activity mActivity;
     private IjkVideoView mVideoView;
@@ -58,6 +65,16 @@ public class PlayerManager {
     private ProgressBar mLoadVideoProgressbar;
     private SeekBar brightnessSeekBar;
     private SeekBar volumeSeekBar;
+    private ImageView settingImage;
+    private LinearLayout settingLayout;
+
+    //倍速
+    private TextView halfspeed;
+    private TextView threequarterspeed;
+    private TextView normalspeed;
+    private TextView fivequarterspeed;
+    private TextView sesquispeed;
+    private TextView doublespeed;
 
     //变量
     private int screenWidth;
@@ -83,6 +100,10 @@ public class PlayerManager {
         mVideoView=mActivity.findViewById(R.id.ijk_video_View);
         mHubView=mActivity.findViewById(R.id.hud_view);
         mLoadVideoProgressbar=mActivity.findViewById(R.id.loadVideoProgress);
+        settingImage=mActivity.findViewById(R.id.setting);
+        settingLayout=mActivity.findViewById(R.id.settingLayout);
+        findSpeeds();
+
         //初始化toolbar
         Toolbar toolbar = (Toolbar) mActivity.findViewById(R.id.toolbar);
         mToolbarBack=mActivity.findViewById(R.id.toolbar_back);
@@ -109,6 +130,28 @@ public class PlayerManager {
         }else if((scale-1.0)<0.00000001){
             MY_DEVICE_SCALE=SCALE_1_1;
         }
+    }
+    private void init_VIDEO_SCALE(){
+        int videowidth,videoheight;
+        videowidth=mVideoView.getWidth();
+        videoheight=mVideoView.getHeight();
+        double scale=videowidth*1.0/videoheight;
+        if(scale-(9/16.0)<0.00000001){
+            VIDEO_SCALE=SCALE_16_9;
+        }else if(scale-(3/4.0)<0.00000001){
+            VIDEO_SCALE=SCALE_4_3;
+        }else if((scale-1.0)<0.00000001){
+            VIDEO_SCALE=SCALE_1_1;
+        }
+    }
+
+    private void findSpeeds(){
+        halfspeed=mActivity.findViewById(R.id.halfspeed);
+        threequarterspeed=mActivity.findViewById(R.id.threequarterspeed);
+        normalspeed=mActivity.findViewById(R.id.normalspeed);
+        fivequarterspeed=mActivity.findViewById(R.id.fivequarterspeed);
+        sesquispeed=mActivity.findViewById(R.id.sesquispeed);
+        doublespeed=mActivity.findViewById(R.id.doublespeed);
     }
 
     public void setLive(boolean live) {
@@ -153,6 +196,28 @@ public class PlayerManager {
         mVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(IMediaPlayer mp) {
+                //监听缓冲更新
+                if(!isLive){
+                    mp.setOnBufferingUpdateListener(new IMediaPlayer.OnBufferingUpdateListener() {
+                        @Override
+                        public void onBufferingUpdate(IMediaPlayer mp, int percent) {
+                            float duration=mp.getDuration();
+                            float currentPosition=mp.getCurrentPosition();
+                            int zoom=100000;
+                            int time= (int) (currentPosition/duration*100*zoom);//当前播放进度百分比*1000
+                            if((0.5+percent)*zoom<=time){
+                                showLoadProgressBar(true);
+                            }
+                            else{
+                                showLoadProgressBar(false);
+                            }
+//                            Log.e("onBufferingUpdate:", "onBufferingUpdate: "+"percent*zoom"+percent*zoom+"time+"+time);
+//                        Toast.makeText(mActivity,"percent:"+percent+"   currentposition"+currentPosition+" "+duration,Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+
                 Runnable runnable=new Runnable() {
                     @Override
                     public void run() {
@@ -188,6 +253,7 @@ public class PlayerManager {
                     }
                 });
 
+
                 //监听自动旋转
                 mMyMediaController.setRotationSwitchListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -217,9 +283,84 @@ public class PlayerManager {
                     }
                 });
 
+
+                if(!isLive)
+                    setSpeedListener();
+
             }
         });
 
+    }
+
+    private void setTextColorWhite(){
+        halfspeed.setTextColor(Color.parseColor("#ffffff"));
+        threequarterspeed.setTextColor(Color.parseColor("#ffffff"));
+        normalspeed.setTextColor(Color.parseColor("#ffffff"));
+        fivequarterspeed.setTextColor(Color.parseColor("#ffffff"));
+        sesquispeed.setTextColor(Color.parseColor("#ffffff"));
+        doublespeed.setTextColor(Color.parseColor("#ffffff"));
+    }
+
+    private void setSpeedListener(){
+        settingImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(settingLayout.getVisibility()!=View.VISIBLE){
+                    settingLayout.setVisibility(View.VISIBLE);
+                }else if(settingLayout.getVisibility()!=View.INVISIBLE){
+                    settingLayout.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        //设置倍速点击事件
+        halfspeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVideoView.setPlaySpeed((float) 0.5);
+                setTextColorWhite();
+                halfspeed.setTextColor(Color.parseColor("#ff3d43"));
+            }
+        });
+        threequarterspeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVideoView.setPlaySpeed((float) 0.75);
+                setTextColorWhite();
+                threequarterspeed.setTextColor(Color.parseColor("#ff3d43"));
+            }
+        });
+        normalspeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVideoView.setPlaySpeed(1);
+                setTextColorWhite();
+                normalspeed.setTextColor(Color.parseColor("#ff3d43"));
+            }
+        });
+        fivequarterspeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVideoView.setPlaySpeed((float) 1.25);
+                setTextColorWhite();
+                fivequarterspeed.setTextColor(Color.parseColor("#ff3d43"));
+            }
+        });
+        sesquispeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVideoView.setPlaySpeed((float) 1.5);
+                setTextColorWhite();
+                sesquispeed.setTextColor(Color.parseColor("#ff3d43"));
+            }
+        });
+        doublespeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mVideoView.setPlaySpeed(2);
+                setTextColorWhite();
+                doublespeed.setTextColor(Color.parseColor("#ff3d43"));
+            }
+        });
     }
 
     public void setVideoUrl(String videoUrl){
@@ -263,11 +404,22 @@ public class PlayerManager {
     }
     public void showLoadProgressBar(boolean show){
         if(show){
-            mLoadVideoProgressbar.setVisibility(View.VISIBLE);
+            if(mLoadVideoProgressbar.getVisibility()!=View.VISIBLE){
+                mLoadVideoProgressbar.setVisibility(View.VISIBLE);
+            }
         }else {
-            mLoadVideoProgressbar.setVisibility(View.INVISIBLE);
+            if(mLoadVideoProgressbar.getVisibility()!=View.INVISIBLE){
+                mLoadVideoProgressbar.setVisibility(View.INVISIBLE);
+            }
         }
     }
+    public void setSpeed(float speed){
+        mVideoView.setPlaySpeed(speed);
+    }
+//    public void setPlaySpendOnClickListener(View.OnClickListener onClickListener){
+//        mMyMediaController.setPlayerSpeedListener(onClickListener);
+//    }
+
 
     //获取屏幕的宽高
     private void initScreenInfo(){
@@ -318,6 +470,8 @@ public class PlayerManager {
 //        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(width,width*9/16);
         relativeLayout.setLayoutParams(params);
     }
+
+
 
 
     /**

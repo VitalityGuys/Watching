@@ -35,6 +35,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -43,7 +44,6 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -115,6 +115,7 @@ public class MyMediaController extends FrameLayout {
     private ImageButton mNextButton;
     private ImageButton mPrevButton;
     private ImageButton mFullScreenButton;
+    private TextView mspeedtext;
     private Switch mRotationSwitch;
     private CharSequence mPlayDescription;
     private CharSequence mPauseDescription;
@@ -337,6 +338,8 @@ public class MyMediaController extends FrameLayout {
         }
 
         mFullScreenButton=(ImageButton)findViewById(R.id.fullscreen);
+
+
 
         mRotationSwitch=(Switch)findViewById(R.id.rotationSwitch);
 //        if(mFullScreenButton!=null){
@@ -791,6 +794,12 @@ public class MyMediaController extends FrameLayout {
         mFullScreenButton.setOnClickListener(onClickListener);
     }
 
+//    //设置倍速监听
+//    public void setPlayerSpeedListener(View.OnClickListener onClickListener){
+//        mspeedtext =findViewById(R.id.playSpeed);
+//        mspeedtext.setOnClickListener(onClickListener);
+//    }
+
     public void setRotationSwitchListener(CompoundButton.OnCheckedChangeListener rotationSwitchListener){
 //        mFullScreenListener=onClickListener;
         mRotationSwitch=findViewById(R.id.rotationSwitch);
@@ -808,7 +817,6 @@ public class MyMediaController extends FrameLayout {
         }
 
     }
-
 
     private ArrayList<View> mShowOnceArray = new ArrayList<View>();
     public void showOnce(@NonNull View view) {

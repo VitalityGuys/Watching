@@ -20,6 +20,82 @@ tools:context=".PlayActivity">
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+        <!--设置布局-->
+        <LinearLayout
+            android:id="@+id/settingLayout"
+            android:layout_width="200dip"
+            android:layout_height="200dip"
+            android:layout_gravity="end|center_vertical"
+            android:background="@color/ijk_transparent_dark"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:text="播放速度："/>
+            <!--倍速设置-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dip">
+
+                <TextView
+                    android:id="@+id/halfspeed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="0.5"/>
+                <TextView
+                    android:id="@+id/threequarterspeed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="0.75"/>
+                <TextView
+                    android:id="@+id/normalspeed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="#ff3d43"
+                    android:text="1.0"/>
+                <TextView
+                    android:id="@+id/fivequarterspeed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="1.25"/>
+                <TextView
+                    android:id="@+id/sesquispeed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="1.5"/>
+                <TextView
+                    android:id="@+id/doublespeed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:text="2.0"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
         <!--标题栏-->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -28,34 +104,76 @@ tools:context=".PlayActivity">
             android:background="#55000000"
             android:minHeight="?attr/actionBarSize">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <!--返回-->
                 <ImageView
                     android:id="@+id/toolbar_back"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="5dp"
-                    android:background="@mipmap/back"
-                    tools:ignore="RtlCompat"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="5dp"
-                    android:scaleType="centerInside"
-                    />
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:src="@mipmap/back"
+                    android:scaleType="centerInside"/>
 
                 <!--标题-->
                 <TextView
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:textColor="#ffffff"
                     android:textSize="16sp" />
-            </RelativeLayout>
+
+                <!--设置-->
+                <ImageView
+                    android:id="@+id/setting"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:layout_gravity="end"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/setting"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp" />
+            </LinearLayout>
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                &lt;!&ndash;返回&ndash;&gt;-->
+<!--                <ImageView-->
+<!--                    android:id="@+id/toolbar_back"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="30dp"-->
+<!--                    android:layout_alignParentStart="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:background="@mipmap/back"-->
+<!--                    tools:ignore="RtlCompat"-->
+<!--                    android:layout_alignParentLeft="true"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:scaleType="centerInside"-->
+<!--                    />-->
+
+<!--                &lt;!&ndash;标题&ndash;&gt;-->
+<!--                <TextView-->
+<!--                    android:id="@+id/toolbar_title"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:textColor="#ffffff"-->
+<!--                    android:textSize="16sp" />-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+
+<!--                    android:scaleType="centerInside"-->
+<!--                    android:src="@mipmap/setting" />-->
+<!--            </RelativeLayout>-->
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -80,7 +198,7 @@ tools:context=".PlayActivity">
             android:visibility="invisible"
             />
 
-        <!--亮度进度条-->
+        <!--音量进度条-->
         <SeekBar
             android:id="@+id/volumeSeekBar"
             style="?android:attr/progressBarStyleHorizontal"

@@ -1,6 +1,7 @@
 package com.example.moviepro;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -9,10 +10,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +30,7 @@ import com.example.moviepro.Utils.ParseHtml;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import okhttp3.Call;
@@ -84,11 +89,7 @@ public class PlayActivity extends AppCompatActivity {
             findView();
             getVideodata(url);
         }
-
     }
-
-
-
 
     @Override
     protected void onPause() {
@@ -276,6 +277,51 @@ public class PlayActivity extends AppCompatActivity {
         videoarea.setText(videoDetail.getArea());
         videolanguage.setText(videoDetail.getLanguage());
         videointroduce.setText("\u3000\u3000" +videoDetail.getIntroduce());
+//        playerManager.setPlaySpendOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.e("setPlayerSpeedListener", "被点击" );
+//                Button button=findViewById(R.id.playSpeed);
+//                PopupMenu popupMenu=new PopupMenu(PlayActivity.this,button);
+//                popupMenu.getMenuInflater().inflate(R.menu.popupmenu,popupMenu.getMenu());
+////                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+////                            @Override
+////                            public boolean onMenuItemClick(MenuItem item) {
+////                                switch (item.getItemId()){
+////                                    case R.id.quarterspeed:
+////                                        mVideoView.setPlaySpeed((float) 0.25);
+////                                    case R.id.halfspeed:
+////                                        mVideoView.setPlaySpeed((float) 0.5);
+////                                    case R.id.threequarterspeed:
+////                                        mVideoView.setPlaySpeed((float) 0.75);
+////                                    case R.id.normalspeed:
+////                                        mVideoView.setPlaySpeed((float) 1);
+////                                    case R.id.fivequarterspeed:
+////                                        mVideoView.setPlaySpeed((float) 1.25);
+////                                    case R.id.sesquispeed:
+////                                        mVideoView.setPlaySpeed((float) 1.5);
+////                                    case R.id.sevenquarterspeed:
+////                                        mVideoView.setPlaySpeed((float) 1.75);
+////                                    case R.id.doublespeed:
+////                                        mVideoView.setPlaySpeed((float) 2);
+////                                    default:
+////                                        break;
+////                                }
+////                                return false;
+////                            }
+////                        });
+////
+////                        //关闭事件
+////                        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+////                            @Override
+////                            public void onDismiss(PopupMenu menu) {
+////                                Toast.makeText(mActivity,"close",Toast.LENGTH_SHORT).show();
+////                            }
+////                        });
+//                //显示菜单，不要少了这一步
+//                popupMenu.show();
+//            }
+//        });
         Toast.makeText(PlayActivity.this,"正在加载，请稍后",Toast.LENGTH_LONG).show();
 
     }
