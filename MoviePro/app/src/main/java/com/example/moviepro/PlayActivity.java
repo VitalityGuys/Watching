@@ -1,46 +1,25 @@
 package com.example.moviepro;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import android.app.Service;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Color;
-import android.media.AudioManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.OrientationEventListener;
-import android.view.Surface;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.Switch;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.moviepro.Base.PlayLink;
 import com.example.moviepro.Base.VideoDetail;
+import com.example.moviepro.Manager.PlayerManager;
 import com.example.moviepro.Utils.HttpUtil;
 import com.example.moviepro.Utils.ParseHtml;
 
@@ -48,16 +27,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-import tv.danmaku.ijk.media.example.widget.media.IjkVideoView;
-import tv.danmaku.ijk.media.example.widget.media.MyMediaController;
-import tv.danmaku.ijk.media.example.widget.media.SurfaceRenderView;
-import tv.danmaku.ijk.media.player.IMediaPlayer;
-import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 public class PlayActivity extends AppCompatActivity {
 
@@ -183,7 +156,7 @@ public class PlayActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         //获取视频详细信息
-                        videoDetail= ParseHtml.parsedetailinfo(html);
+                        videoDetail= ParseHtml.parsedetailinfo(html,SearchActivity.currentplaySourceRule);
 
                         GridLayout gridLayoutm3u8=(GridLayout)findViewById(R.id.gridlayoutm3u8);
                         GridLayout gridLayoutmp4=(GridLayout)findViewById(R.id.gridlayoutmp4);
@@ -234,6 +207,7 @@ public class PlayActivity extends AppCompatActivity {
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            playerManager.pausePlay();
                             Uri uri = Uri.parse(PlayList.get(index).getVideourl());
                             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(intent);

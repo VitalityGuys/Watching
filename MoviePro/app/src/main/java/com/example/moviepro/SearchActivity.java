@@ -3,7 +3,11 @@ package com.example.moviepro;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.effect.effects.SharpenEffect;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,10 +21,16 @@ import android.widget.Toast;
 
 import com.example.moviepro.Adapter.VideoAdapter;
 import com.example.moviepro.Base.VideoInfo;
+import com.example.moviepro.Manager.PlaySourceRuleManager;
 import com.example.moviepro.Utils.HttpUtil;
 import com.example.moviepro.Utils.ParseHtml;
+import com.example.moviepro.bean.PlaySourceRule;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,12 +47,26 @@ public class SearchActivity extends AppCompatActivity {
     Button mSearchButton;
     ListView listView;
     private Spinner mSpinner;
-    String[] spinnerItems={"最大资源网","OK资源网","速播资源网","最新资源网","麻花资源网","135资源网"};
+//    String[] spinnerItems={"最大资源网","OK资源网","速播资源网","最新资源网","麻花资源网","135资源网"};
+//    String[] spinnerItems={};
+    ArrayList<String> spinnerItems=new ArrayList<>();
     private int selectedItemIdx=0;
+    public static PlaySourceRuleManager playSourceRuleManager;
+    public static PlaySourceRule currentplaySourceRule;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        //允许主线程中调用http请求
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        boolean flag=initPlayResource();
+        if(!flag){
+            return;
+        }
+        initSpinnerItems();
 
         findView();
         setSpinner();
@@ -52,6 +76,54 @@ public class SearchActivity extends AppCompatActivity {
         addListener();
 
     }
+
+    //初始化播放源
+    private boolean initPlayResource(){
+
+        SharedPreferences preferences=getSharedPreferences("playResource",MODE_PRIVATE);
+        String playResource=preferences.getString("playResource","");
+        if(playResource.equals("")){//网络加载
+            Toast.makeText(SearchActivity.this,"网络加载片源。。。",Toast.LENGTH_SHORT).show();
+            playResource=HttpUtil.synGet("https://yuumiandyasuo.github.io/fyz.github.io/PlayResource.json");
+            int i=0;
+            while (playResource.equals("")&&i<3){//请求失败重试
+                Toast.makeText(SearchActivity.this,"网络加载失败，正在重试。。。第"+i+"次",Toast.LENGTH_SHORT).show();
+                playResource=HttpUtil.synGet("https://yuumiandyasuo.github.io/fyz.github.io/PlayResource.json");
+                i++;
+            }
+            if(playResource.equals("")){
+                Toast.makeText(SearchActivity.this,"你的网络有问题，请检查。。。",Toast.LENGTH_SHORT).show();
+                return false;
+            }else {
+                Toast.makeText(SearchActivity.this,"网络加载successfully。。。",Toast.LENGTH_SHORT).show();
+            }
+
+        }else{
+            Toast.makeText(SearchActivity.this,"本地加载片源。。。",Toast.LENGTH_SHORT).show();
+        }
+        try {//解析json
+            playSourceRuleManager=ParseHtml.ParsePlayResource(playResource.replace("\\",""));
+            currentplaySourceRule=playSourceRuleManager.getPlaySourceRules().get(0);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //将片源保存到SharedPreferences
+        SharedPreferences.Editor editor=getSharedPreferences("playResource",MODE_PRIVATE).edit();
+        editor.putString("playResource",playResource);
+        editor.apply();
+        return true;
+
+    }
+
+    private void initSpinnerItems(){
+        int length=playSourceRuleManager.getPlaySourceRules().size();
+        for(int i=0;i<length;i++){
+            spinnerItems.add(playSourceRuleManager.getPlaySourceRules().get(i).getPlaysourcename());
+        }
+        System.out.println(spinnerItems.toString());
+    }
+
 
     private void initlive(){
         final ArrayList<VideoInfo> videolist=new ArrayList<>();
@@ -131,11 +203,14 @@ public class SearchActivity extends AppCompatActivity {
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
-                selectedItemIdx=position;
+
 //                Toast.makeText(SearchActivity.this,position+"当前选中："+spinnerItems[position],Toast.LENGTH_SHORT).show();
 
                 if(position==4||position==5){
                     Toast.makeText(SearchActivity.this,position+"当前选中的不可用，请更换其他源",Toast.LENGTH_SHORT).show();
+                }else {
+                    selectedItemIdx=position;
+                    currentplaySourceRule=playSourceRuleManager.getPlaySourceRules().get(position);
                 }
 
             }
@@ -153,31 +228,35 @@ public class SearchActivity extends AppCompatActivity {
         String keyword=mSearch_edit.getText().toString();
         Toast.makeText(SearchActivity.this,"搜索词："+keyword,Toast.LENGTH_SHORT).show();
 
-        if(selectedItemIdx==0){
-            search_zy(keyword,"http://www.zuidazy5.com");
-        }else if(selectedItemIdx==1){
-            search_zy(keyword,"https://www.okzy.co");
-        }else if(selectedItemIdx==2){
-            search_zy(keyword,"https://www.subo988.com");
-        }else if(selectedItemIdx==3){
-            search_zy(keyword,"http://www.zuixinzy.net");
-        }else if(selectedItemIdx==4){
-            search_zy(keyword,"http://www.mahuazy.com");
-        }else if(selectedItemIdx==5){
-            search_zy(keyword,"http://135zy0.com");
-        }
+        search_zy(keyword);
+//        if(selectedItemIdx==0){
+//            search_zy(keyword,"http://www.zuidazy5.com");
+//        }else if(selectedItemIdx==1){
+//            search_zy(keyword,"https://www.okzy.co");
+//        }else if(selectedItemIdx==2){
+//            search_zy(keyword,"https://www.subo988.com");
+//        }else if(selectedItemIdx==3){
+//            search_zy(keyword,"http://www.zuixinzy.net");
+//        }else if(selectedItemIdx==4){
+//            search_zy(keyword,"http://www.mahuazy.com");
+//        }else if(selectedItemIdx==5){
+//            search_zy(keyword,"http://135zy0.com");
+//        }
 
 
     }
 
     //搜索资源
-    private void search_zy(String searchword, final String hostUrl){
+    private void search_zy(String searchword){
         RequestBody requestBody=new FormBody.Builder()
-                .add("m","vod-search")
-                .add("wd",searchword)
-                .add("submit","search")
+                .add(currentplaySourceRule.getSearchrequestbody().getFirstkey(),searchword)
+                .add(currentplaySourceRule.getSearchrequestbody().getSecondkey(),currentplaySourceRule.getSearchrequestbody().getSecondvalue())
+                .add(currentplaySourceRule.getSearchrequestbody().getThirdkey(),currentplaySourceRule.getSearchrequestbody().getThirdvalue())
+//                .add("m","vod-search")
+//                .add("wd",searchword)
+//                .add("submit","search")
                 .build();
-        HttpUtil.post(hostUrl+"/index.php?m=vod-search", requestBody, new Callback() {
+        HttpUtil.post(currentplaySourceRule.getSearchurl(), requestBody, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 runOnUiThread(new Runnable() {
@@ -194,7 +273,7 @@ public class SearchActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        final ArrayList<VideoInfo> videolist= ParseHtml.parsebaseinfo(html);
+                        final ArrayList<VideoInfo> videolist= ParseHtml.parsebaseinfo(html,currentplaySourceRule);
                         VideoAdapter videoAdapter=new VideoAdapter(SearchActivity.this,R.layout.videolist,videolist);
                         ListView listView=(ListView)findViewById(R.id.videolist);
                         listView.setAdapter(videoAdapter);
@@ -207,7 +286,7 @@ public class SearchActivity extends AppCompatActivity {
                                 Toast.makeText(SearchActivity.this,videoInfo.getVideoname(),Toast.LENGTH_SHORT).show();
                                 //从当前页面跳转到播放页面，并将选中视频信息传递过去
                                 Intent intent=new Intent(SearchActivity.this,PlayActivity.class);
-                                intent.putExtra("url",hostUrl+videoInfo.getVideourl());
+                                intent.putExtra("url",currentplaySourceRule.getPlaysourceurl()+videoInfo.getVideourl());
                                 intent.putExtra("type","video");
                                 startActivity(intent);
                             }
