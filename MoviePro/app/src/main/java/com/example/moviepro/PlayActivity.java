@@ -1,50 +1,45 @@
 package com.example.moviepro;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuPopupHelper;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.moviepro.Base.PlayLink;
 import com.example.moviepro.Base.VideoDetail;
-import com.example.moviepro.Manager.PlayerManager;
 import com.example.moviepro.Utils.HttpUtil;
 import com.example.moviepro.Utils.ParseHtml;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import tv.danmaku.ijk.media.example.PlayLink;
 
 public class PlayActivity extends AppCompatActivity {
-
-    private PlayerManager playerManager;
-    private VideoDetail videoDetail;
-    private boolean enablem3u8=false;
-    private boolean switchPlaysourceStatus =true;              //是否首次加载切换播放源
-
-
+//    String mVideoPath = "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8";
+            String mVideoPath = "http://ok.renzuida.com/2001/仙王的日常生活-01.mp4";
+    PlayerManager playerManager;
     //视频详细信息控件
     private ImageView coverimg;
     private TextView videotype;
@@ -56,36 +51,46 @@ public class PlayActivity extends AppCompatActivity {
     private TextView videointroduce;
     private TextView playnum;
 
-
+    private VideoDetail videoDetail;
+    ArrayList<String> cids=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_play);
 
 
-//        Uri uri = Uri.parse("https://yushou.qitu-zuida.com/share/c50b8d55acad50abed2b155f67fc56b3");
-//        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//        startActivity(intent);
+        //允许主线程中调用http请求
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
-
-
-        playerManager = new PlayerManager(this);
 
         //获取上个页面传递过来的视频详细链接
         Intent intent=getIntent();
         String type=intent.getStringExtra("type");
         String url=intent.getStringExtra("url");
+        String name=intent.getStringExtra("name");
+
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.hide();
+        }
+
+
 
         if(type.equals("live")){//播放直播
-            playerManager.setLive(true);
-            playerManager.setVideoUrl(url);
-            playerManager.startPlay();
-            findViewById(R.id.playinginfo).setVisibility(View.GONE);
-            findViewById(R.id.videodetaillayout).setVisibility(View.GONE);
-            findViewById(R.id.xuanji).setVisibility(View.GONE);
+            setContentView(R.layout.activity_playlive);
+            playerManager=new PlayerManager(this);
+            playerManager.isLive(true);
+            playerManager.setVideoPath(url);
+            playerManager.start();
         }else if(type.equals("video")){
-            playerManager.setLive(false);
+            setContentView(R.layout.activity_play);
+            playerManager=new PlayerManager(this);
+            //获取弹幕cid 测试
+            String link=playerManager.getVideoLink(name);
+            if(link!=null&& !link.equals("")){
+                cids=playerManager.getCids(link);
+            }
             findView();
             getVideodata(url);
         }
@@ -94,18 +99,28 @@ public class PlayActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        playerManager.pausePlay();
+        playerManager.pause();
+        playerManager.danmaPause();
     }
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(playerManager!=null){
-            playerManager.showMediaController();
-        }
+//        if(playerManager!=null){
+//            playerManager.showMediaController();
+//        }
+        playerManager.start();
+        playerManager.danmaResume();
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        playerManager.danmarelease();
+    }
 
     @Override
     public void onBackPressed() {
@@ -113,6 +128,94 @@ public class PlayActivity extends AppCompatActivity {
             playerManager.backPressed();
         }
 
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.e("onConfigurationChanged", "onConfigurationChanged: 被处罚");
+        Toast.makeText(this,"旋转被触发",Toast.LENGTH_SHORT).show();
+//        if(newConfig.orientation== ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+//            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else if(newConfig.orientation== ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+//            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }else if(newConfig.orientation== ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE){
+//            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+//        }else if(newConfig.orientation== ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT){
+//            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+//        }
+
+
+    }
+
+//    private VideoDetail getdata(){
+//       String string=HttpUtil.synGet("http://www.zuidazy5.com/?m=vod-detail-id-33988.html");
+//        VideoDetail videoDetail=ParseHtml.parsedetailinfo(string);
+//        return videoDetail;
+//    }
+
+    //请求视频播放链接等数据、并进行相关设置
+    private void getVideodata(final String videoDetailUrl){
+        HttpUtil.get(videoDetailUrl, new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(PlayActivity.this,"加载视频失败，请刷新重试",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                //获得网页返回的数据
+                final String html=response.body().string();
+                videoDetail=ParseHtml.parsedetailinfo(html,SearchActivity.currentplaySourceRule);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //设置详细信息
+                        Glide.with(PlayActivity.this).load(videoDetail.getCoverimage()).into(coverimg);
+                        playnum.setText(videoDetail.getPlaylists_m3u8().get(0).getVideonum());
+                        videotype.setText(videoDetail.getVideotype());
+                        videoname.setText(videoDetail.getVideoname());
+                        videodirector.setText(videoDetail.getDirector());
+                        videoactors.setText(videoDetail.getActors());
+                        videoarea.setText(videoDetail.getArea());
+                        videolanguage.setText(videoDetail.getLanguage());
+                        videointroduce.setText("\u3000\u3000" +videoDetail.getIntroduce());
+
+                        GridLayout gridLayoutm3u8=(GridLayout)findViewById(R.id.gridlayoutm3u8);
+                        GridLayout gridLayoutmp4=(GridLayout)findViewById(R.id.gridlayoutmp4);
+                        GridLayout gridLayoutweb=(GridLayout)findViewById(R.id.gridlayoutweb);
+
+                        //设置m3u8播放列表（选集列表）
+                        setPlayList(videoDetail.getPlaylists_m3u8(),gridLayoutm3u8,false);
+                        setPlayList(videoDetail.getPlaylists_mp4(),gridLayoutmp4,false);
+                        setPlayList(videoDetail.getPlaylists_web(),gridLayoutweb,true);
+
+
+
+
+
+
+
+                        playerManager.setPlaylist(videoDetail.getPlaylists_m3u8());
+                        playerManager.setVideoPath(videoDetail.getPlaylists_m3u8().get(0).getVideourl());
+                        if(cids!=null&&cids.size()!=0){
+                            playerManager.setCids(cids);
+                            playerManager.setCurrentCid(cids.get(0));
+                        }
+
+                        playerManager.setVideoTitle(videoDetail.getVideoname()+" "+videoDetail.getPlaylists_m3u8().get(0).getVideonum());
+                        playerManager.start();
+                    }
+                });
+
+            }
+        });
     }
 
     //获取所有的全局控件
@@ -130,55 +233,8 @@ public class PlayActivity extends AppCompatActivity {
 
     }
 
-    //请求视频播放链接等数据、并进行相关设置
-    private void getVideodata(String videoDetailUrl){
-        HttpUtil.get(videoDetailUrl, new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(PlayActivity.this,"加载视频失败，请刷新重试",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                //获得网页返回的数据
-                final String html=response.body().string();
-
-                /**
-                 * 开一个线程进行界面的设置，否则报错
-                 * android.view.ViewRootImpl$CalledFromWrongThreadException:
-                 * Only the original thread that created a view hierarchy can touch its views.
-                 */
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //获取视频详细信息
-                        videoDetail= ParseHtml.parsedetailinfo(html,SearchActivity.currentplaySourceRule);
-
-                        GridLayout gridLayoutm3u8=(GridLayout)findViewById(R.id.gridlayoutm3u8);
-                        GridLayout gridLayoutmp4=(GridLayout)findViewById(R.id.gridlayoutmp4);
-                        GridLayout gridLayoutweb=(GridLayout)findViewById(R.id.gridlayoutweb);
-
-                        //设置m3u8播放列表（选集列表）
-                        setPlayList(videoDetail.getPlaylists_m3u8(),gridLayoutm3u8,false);
-                        setPlayList(videoDetail.getPlaylists_mp4(),gridLayoutmp4,false);
-                        setPlayList(videoDetail.getPlaylists_web(),gridLayoutweb,true);
-
-                        //设置详细信息
-                        setDetailInfo(videoDetail);
-
-                    }
-                });
-            }
-        });
-    }
-
     //设置视频的选集列表
-    private void setPlayList(final ArrayList<PlayLink> PlayList,final GridLayout gridLayout,boolean isweb){
+    private void setPlayList(final ArrayList<PlayLink> PlayList, final GridLayout gridLayout, boolean isweb){
 
         GridLayout.LayoutParams params = null;
 
@@ -208,7 +264,7 @@ public class PlayActivity extends AppCompatActivity {
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            playerManager.pausePlay();
+                            playerManager.pause();
                             Uri uri = Uri.parse(PlayList.get(index).getVideourl());
                             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(intent);
@@ -218,7 +274,9 @@ public class PlayActivity extends AppCompatActivity {
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            playerManager.setVideoUrl(PlayList.get(index).getVideourl());
+                            playerManager.setVideoPath(PlayList.get(index).getVideourl());
+                            if(cids!=null&&cids.size()>index)
+                            playerManager.setCurrentCid(cids.get(index));
                             playerManager.setVideoTitle(videoDetail.getVideoname()+" "+PlayList.get(index).getVideonum());
 
                             for (int i = 0; i < gridLayout.getChildCount(); i++) {//清空所有背景色
@@ -254,79 +312,5 @@ public class PlayActivity extends AppCompatActivity {
         }
     }
 
-    //设置视频的详细信息，并添加播放链接
-    private void setDetailInfo(VideoDetail videoDetail){
-
-
-        if(videoDetail.getPlaylists_m3u8().size()>0){
-            playerManager.setVideoUrl(videoDetail.getPlaylists_m3u8().get(0).getVideourl());
-            playerManager.setVideoTitle(videoDetail.getVideoname()+" "+videoDetail.getPlaylists_m3u8().get(0).getVideonum());
-        }else if(videoDetail.getPlaylists_mp4().size()>0){
-            playerManager.setVideoUrl(videoDetail.getPlaylists_mp4().get(0).getVideourl());
-            playerManager.setVideoTitle(videoDetail.getVideoname()+" "+videoDetail.getPlaylists_mp4().get(0).getVideonum());
-        }else {//所有播放链接为空 退出
-            Toast.makeText(PlayActivity.this,"此影片无法播放，换个源试试",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Glide.with(PlayActivity.this).load(videoDetail.getCoverimage()).into(coverimg);
-        playnum.setText(videoDetail.getPlaylists_m3u8().get(0).getVideonum());
-        videotype.setText(videoDetail.getVideotype());
-        videoname.setText(videoDetail.getVideoname());
-        videodirector.setText(videoDetail.getDirector());
-        videoactors.setText(videoDetail.getActors());
-        videoarea.setText(videoDetail.getArea());
-        videolanguage.setText(videoDetail.getLanguage());
-        videointroduce.setText("\u3000\u3000" +videoDetail.getIntroduce());
-//        playerManager.setPlaySpendOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.e("setPlayerSpeedListener", "被点击" );
-//                Button button=findViewById(R.id.playSpeed);
-//                PopupMenu popupMenu=new PopupMenu(PlayActivity.this,button);
-//                popupMenu.getMenuInflater().inflate(R.menu.popupmenu,popupMenu.getMenu());
-////                        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-////                            @Override
-////                            public boolean onMenuItemClick(MenuItem item) {
-////                                switch (item.getItemId()){
-////                                    case R.id.quarterspeed:
-////                                        mVideoView.setPlaySpeed((float) 0.25);
-////                                    case R.id.halfspeed:
-////                                        mVideoView.setPlaySpeed((float) 0.5);
-////                                    case R.id.threequarterspeed:
-////                                        mVideoView.setPlaySpeed((float) 0.75);
-////                                    case R.id.normalspeed:
-////                                        mVideoView.setPlaySpeed((float) 1);
-////                                    case R.id.fivequarterspeed:
-////                                        mVideoView.setPlaySpeed((float) 1.25);
-////                                    case R.id.sesquispeed:
-////                                        mVideoView.setPlaySpeed((float) 1.5);
-////                                    case R.id.sevenquarterspeed:
-////                                        mVideoView.setPlaySpeed((float) 1.75);
-////                                    case R.id.doublespeed:
-////                                        mVideoView.setPlaySpeed((float) 2);
-////                                    default:
-////                                        break;
-////                                }
-////                                return false;
-////                            }
-////                        });
-////
-////                        //关闭事件
-////                        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
-////                            @Override
-////                            public void onDismiss(PopupMenu menu) {
-////                                Toast.makeText(mActivity,"close",Toast.LENGTH_SHORT).show();
-////                            }
-////                        });
-//                //显示菜单，不要少了这一步
-//                popupMenu.show();
-//            }
-//        });
-        Toast.makeText(PlayActivity.this,"正在加载，请稍后",Toast.LENGTH_LONG).show();
-
-    }
-
-
 
 }
-

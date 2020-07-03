@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
     Button mSearchButton;
     RecyclerView recyclerView;
     private Spinner mSpinner;
-//    String[] spinnerItems={"最大资源网","OK资源网","速播资源网","最新资源网","麻花资源网","135资源网"};
+    //    String[] spinnerItems={"最大资源网","OK资源网","速播资源网","最新资源网","麻花资源网","135资源网"};
 //    String[] spinnerItems={};
     ArrayList<String> spinnerItems=new ArrayList<>();
     private int selectedItemIdx=0;
@@ -138,7 +138,7 @@ public class SearchActivity extends AppCompatActivity {
         videolist.add(new VideoInfo("cctv10 科教","直播","http://ivi.bupt.edu.cn/hls/cctv10hd.m3u8"));
         videolist.add(new VideoInfo("cctv11 戏曲","直播","http://120.241.133.167/outlivecloud-cdn.ysp.cctv.cn/cctv/2000204103.m3u8"));
         videolist.add(new VideoInfo("cctv12 社会与法","直播","http://ivi.bupt.edu.cn/hls/cctv12hd.m3u8"));
-        videolist.add(new VideoInfo("cctv13 新闻","直播","http://120.241.133.167/outlivecloud-cdn.ysp.cctv.cn/cctv/2000204603.m3u8"));
+        videolist.add(new VideoInfo("cctv13 新闻","直播","https://xigua-cdn.haima-zuida.com/20200121/1022_227c1fa5/index.m3u8"));
         videolist.add(new VideoInfo("cctv14 少儿","直播","http://ivi.bupt.edu.cn/hls/cctv14hd.m3u8"));
         videolist.add(new VideoInfo("cctv15 音乐","直播","http://120.241.133.167/outlivecloud-cdn.ysp.cctv.cn/cctv/2000205003.m3u8"));
         videolist.add(new VideoInfo("cctv17 农业农村","直播","http://ivi.bupt.edu.cn/hls/cctv17hd.m3u8"));
@@ -228,19 +228,6 @@ public class SearchActivity extends AppCompatActivity {
         Toast.makeText(SearchActivity.this,"搜索词："+keyword,Toast.LENGTH_SHORT).show();
 
         search_zy(keyword);
-//        if(selectedItemIdx==0){
-//            search_zy(keyword,"http://www.zuidazy5.com");
-//        }else if(selectedItemIdx==1){
-//            search_zy(keyword,"https://www.okzy.co");
-//        }else if(selectedItemIdx==2){
-//            search_zy(keyword,"https://www.subo988.com");
-//        }else if(selectedItemIdx==3){
-//            search_zy(keyword,"http://www.zuixinzy.net");
-//        }else if(selectedItemIdx==4){
-//            search_zy(keyword,"http://www.mahuazy.com");
-//        }else if(selectedItemIdx==5){
-//            search_zy(keyword,"http://135zy0.com");
-//        }
 
 
     }
@@ -276,25 +263,8 @@ public class SearchActivity extends AppCompatActivity {
                         VideoAdapter videoAdapter=new VideoAdapter(videolist);
                         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.videolist);
                         recyclerView.setAdapter(videoAdapter);
-
-                        //监听listview中的每一项
-//                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                            @Override
-//                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                                VideoInfo videoInfo = videolist.get(position);
-//                                Toast.makeText(SearchActivity.this,videoInfo.getVideoname(),Toast.LENGTH_SHORT).show();
-//                                //从当前页面跳转到播放页面，并将选中视频信息传递过去
-//                                Intent intent=new Intent(SearchActivity.this,PlayActivity.class);
-//                                intent.putExtra("url",currentplaySourceRule.getPlaysourceurl()+videoInfo.getVideourl());
-//                                intent.putExtra("type","video");
-//                                startActivity(intent);
-//                            }
-//                        });
-//                                Toast.makeText(indexActivity.this,"成功"+html,Toast.LENGTH_LONG).show();
                     }
                 });
-
-//                        Log.d("tag", "onResponse: "+html);
             }
         });
 

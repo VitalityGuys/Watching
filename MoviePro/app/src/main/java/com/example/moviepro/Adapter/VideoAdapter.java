@@ -50,26 +50,20 @@ package com.example.moviepro.Adapter;//package com.example.moviepro.Adapter;
 //}
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviepro.Base.VideoInfo;
 import com.example.moviepro.PlayActivity;
 import com.example.moviepro.R;
-import com.example.moviepro.SearchActivity;
 
 import java.util.List;
-
-import static com.example.moviepro.SearchActivity.currentplaySourceRule;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
     private List<VideoInfo> mVideoInfoList;
@@ -103,6 +97,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 Intent intent=new Intent(v.getContext(), PlayActivity.class);
 
                 intent.putExtra("url",videoInfo.getVideourl());
+                intent.putExtra("name",videoInfo.getVideoname());
                 if(videoInfo.getVideotype().equals("直播")){
                     intent.putExtra("type","live");
                 }else{

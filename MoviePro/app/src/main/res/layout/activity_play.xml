@@ -1,217 +1,40 @@
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="vertical"
-tools:context=".PlayActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
+<!--    <include layout="@layout/activity_player"/>-->
 
-    <!--播放器-->
-    <FrameLayout
-        android:id="@+id/media_box"
+    <tv.danmaku.ijk.media.example.MyIJKVideoView
         android:layout_width="match_parent"
-        android:layout_height="260dip">
-
-        <!--播放器-->
-        <tv.danmaku.ijk.media.example.widget.media.IjkVideoView
-            android:id="@+id/ijk_video_View"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <!--设置布局-->
-        <LinearLayout
-            android:id="@+id/settingLayout"
-            android:layout_width="200dip"
-            android:layout_height="200dip"
-            android:layout_gravity="end|center_vertical"
-            android:background="@color/ijk_transparent_dark"
-            android:orientation="vertical"
-            android:visibility="invisible">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:text="播放速度："/>
-            <!--倍速设置-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dip">
-
-                <TextView
-                    android:id="@+id/halfspeed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="0.5"/>
-                <TextView
-                    android:id="@+id/threequarterspeed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="0.75"/>
-                <TextView
-                    android:id="@+id/normalspeed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textColor="#ff3d43"
-                    android:text="1.0"/>
-                <TextView
-                    android:id="@+id/fivequarterspeed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="1.25"/>
-                <TextView
-                    android:id="@+id/sesquispeed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="1.5"/>
-                <TextView
-                    android:id="@+id/doublespeed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:text="2.0"/>
-            </LinearLayout>
+        android:layout_height="wrap_content"/>
 
 
-        </LinearLayout>
+<!--    <tv.danmaku.ijk.media.example.widget.media.IjkVideoView-->
+<!--        android:id="@+id/videoView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
 
-        <!--标题栏-->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="#55000000"
-            android:minHeight="?attr/actionBarSize">
+<!--    <TextView-->
+<!--        android:id="@+id/toast_text_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center_vertical"-->
+<!--        android:background="@color/ijk_transparent_dark"-->
+<!--        android:padding="16dp"-->
+<!--        android:textSize="16sp"-->
+<!--        android:visibility="gone" />-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <!--返回-->
-                <ImageView
-                    android:id="@+id/toolbar_back"
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:src="@mipmap/back"
-                    android:scaleType="centerInside"/>
-
-                <!--标题-->
-                <TextView
-                    android:id="@+id/toolbar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:textColor="#ffffff"
-                    android:textSize="16sp" />
-
-                <!--设置-->
-                <ImageView
-                    android:id="@+id/setting"
-                    android:layout_width="30dip"
-                    android:layout_height="30dip"
-                    android:layout_gravity="end"
-                    android:scaleType="centerInside"
-                    android:src="@mipmap/setting"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp" />
-            </LinearLayout>
-
-<!--            <RelativeLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
-
-<!--                &lt;!&ndash;返回&ndash;&gt;-->
-<!--                <ImageView-->
-<!--                    android:id="@+id/toolbar_back"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:layout_alignParentStart="true"-->
-<!--                    android:layout_centerVertical="true"-->
-<!--                    android:layout_marginStart="5dp"-->
-<!--                    android:background="@mipmap/back"-->
-<!--                    tools:ignore="RtlCompat"-->
-<!--                    android:layout_alignParentLeft="true"-->
-<!--                    android:layout_marginLeft="5dp"-->
-<!--                    android:scaleType="centerInside"-->
-<!--                    />-->
-
-<!--                &lt;!&ndash;标题&ndash;&gt;-->
-<!--                <TextView-->
-<!--                    android:id="@+id/toolbar_title"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerInParent="true"-->
-<!--                    android:textColor="#ffffff"-->
-<!--                    android:textSize="16sp" />-->
-
-<!--                <ImageView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-
-<!--                    android:scaleType="centerInside"-->
-<!--                    android:src="@mipmap/setting" />-->
-<!--            </RelativeLayout>-->
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <!--加载进度条-->
-        <ProgressBar
-            android:id="@+id/loadVideoProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            style="?android:attr/progressBarStyle"/>
-
-        <!--亮度进度条-->
-        <SeekBar
-            android:id="@+id/brightnessSeekBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="150dp"
-            android:layout_height="10dp"
-            android:max="100"
-            android:progress="0"
-            android:rotation="270"
-            android:layout_gravity="end|center_vertical"
-            android:visibility="invisible"
-            />
-
-        <!--音量进度条-->
-        <SeekBar
-            android:id="@+id/volumeSeekBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="150dp"
-            android:layout_height="10dp"
-            android:max="100"
-            android:progress="0"
-            android:rotation="270"
-            android:layout_gravity="start|center_vertical"
-            android:visibility="invisible"
-            />
-    </FrameLayout>
-
+<!--    <TableLayout-->
+<!--        android:id="@+id/hud_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|center"-->
+<!--        android:background="@color/ijk_transparent_dark"-->
+<!--        android:padding="8dp" />-->
     <!--当前正在播放集数-->
     <LinearLayout
         android:id="@+id/playinginfo"
@@ -455,13 +278,13 @@ tools:context=".PlayActivity">
                 </GridLayout>
             </LinearLayout>
 
-            <!--视频调试信息-->
-            <TableLayout
-                android:id="@+id/hud_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="#e5ffe5"/>
+<!--            &lt;!&ndash;视频调试信息&ndash;&gt;-->
+<!--            <TableLayout-->
+<!--                android:id="@+id/hud_view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:background="#e5ffe5"/>-->
         </LinearLayout>
     </ScrollView>
 

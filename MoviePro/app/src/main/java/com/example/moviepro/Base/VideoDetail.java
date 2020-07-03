@@ -2,6 +2,9 @@ package com.example.moviepro.Base;
 
 import java.util.ArrayList;
 
+import tv.danmaku.ijk.media.example.PlayLink;
+
+
 public class VideoDetail {
     private String videoname;
     private String coverimage;

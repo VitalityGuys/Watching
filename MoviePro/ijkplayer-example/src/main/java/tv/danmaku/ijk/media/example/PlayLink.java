@@ -1,4 +1,4 @@
-package com.example.moviepro.Base;
+package tv.danmaku.ijk.media.example;
 
 public class PlayLink {//播放链接
     private String videonum;//第几集或者该集对应的名称      第1集/BD超清中字

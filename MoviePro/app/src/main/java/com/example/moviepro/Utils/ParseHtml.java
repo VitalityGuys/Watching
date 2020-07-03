@@ -1,10 +1,9 @@
 package com.example.moviepro.Utils;
 
-import com.example.moviepro.Base.PlayLink;
-import com.example.moviepro.Manager.PlaySourceRuleManager;
-import com.example.moviepro.bean.PlaySourceRule;
 import com.example.moviepro.Base.VideoDetail;
 import com.example.moviepro.Base.VideoInfo;
+import com.example.moviepro.Manager.PlaySourceRuleManager;
+import com.example.moviepro.bean.PlaySourceRule;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -23,7 +22,7 @@ public class ParseHtml {
      * @param html
      * @return
      */
-    public static ArrayList<VideoInfo> parsebaseinfo(String html,PlaySourceRule playSourceRule){
+    public static ArrayList<VideoInfo> parsebaseinfo(String html, PlaySourceRule playSourceRule){
         Document document= Jsoup.parse(html);
         Elements names=document.select(playSourceRule.getRulesearch().getVideonamerule());
         Elements types=document.select(playSourceRule.getRulesearch().getVideotyperule());
@@ -37,7 +36,7 @@ public class ParseHtml {
             if(type.equals("福利片")||type.equals("伦理片")||type.equals("理论片")||type.equals("情色片")){
                 continue;
             }
-            videoInfo.setVideoname(names.get(i).text());
+            videoInfo.setVideoname(names.get(i).ownText().split(" ")[0]);
             videoInfo.setVideotype(type);
             videoInfo.setVideourl(playSourceRule.getPlaysourceurl()+links.get(i).attr("href"));
             searchresult.add(videoInfo);
@@ -82,11 +81,11 @@ public class ParseHtml {
                 String string=content[1];
                 String s=string.substring(string.length()-4);
                 if(s.equals("m3u8")){
-                    videoDetail.getPlaylists_m3u8().add(new PlayLink(content[0],content[1]));
+                    videoDetail.getPlaylists_m3u8().add(new tv.danmaku.ijk.media.example.PlayLink(content[0],content[1]));
                 }else if(s.equals(".mp4")){
-                    videoDetail.getPlaylists_mp4().add(new PlayLink(content[0],content[1]));
+                    videoDetail.getPlaylists_mp4().add(new tv.danmaku.ijk.media.example.PlayLink(content[0],content[1]));
                 }else{
-                    videoDetail.getPlaylists_web().add(new PlayLink(content[0],content[1]));
+                    videoDetail.getPlaylists_web().add(new tv.danmaku.ijk.media.example.PlayLink(content[0],content[1]));
                 }
 //            System.out.println(element.text());
             }
@@ -107,6 +106,31 @@ public class ParseHtml {
         return videoDetail;
 
     }
+//    public static VideoDetail parsedetailinfo(String html){
+//        Document document= Jsoup.parse(html);
+//
+//        VideoDetail videoDetail=new VideoDetail();
+//        //获取播放链接
+//        Elements elements=document.select(".vodplayinfo ul li");
+//        for(Element element:elements){
+//            String []tmp=element.text().split(" ");
+//            String[]content=tmp[0].split("\\$");
+//            String string=content[1];
+//            String s=string.substring(string.length()-4);
+//            if(s.equals("m3u8")){
+//                videoDetail.getPlaylists_m3u8().add(new tv.danmaku.ijk.media.example.PlayLink(content[0],content[1]));
+//            }else if(s.equals(".mp4")){
+//                videoDetail.getPlaylists_mp4().add(new tv.danmaku.ijk.media.example.PlayLink(content[0],content[1]));
+//            }else{
+//                videoDetail.getPlaylists_web().add(new tv.danmaku.ijk.media.example.PlayLink(content[0],content[1]));
+//            }
+////            System.out.println(element.text());
+//        }
+//
+//
+//        return videoDetail;
+//
+//    }
 
     public static PlaySourceRuleManager ParsePlayResource(String response) throws JSONException {
 //        JSONObject jsonObject=new JSONObject(response);

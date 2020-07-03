@@ -1,12 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/ijk_transparent_dark"
+    android:background="#30000000"
     android:orientation="vertical"
     android:layoutDirection="ltr">
 
-    <!--进度条-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +20,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true" />
 
 <!--        <ImageButton android:id="@+id/prev" style="@android:style/MediaButton.Previous" />&lt;!&ndash;上一集&ndash;&gt;-->
 <!--        <ImageButton android:id="@+id/rew" style="@android:style/MediaButton.Rew" />&lt;!&ndash;快退&ndash;&gt;-->
@@ -32,11 +30,13 @@
 
     </LinearLayout>
 
-    <!--下方控制布局-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingStart="5dp"
+        android:paddingLeft="5dp"
+        android:paddingEnd="5dp">
 
 <!--        <ImageButton android:id="@+id/pause" style="@android:style/MediaButton.Play" android:layout_width="36dip" android:layout_height="25dip" />&lt;!&ndash;播放/暂停&ndash;&gt;-->
 
@@ -45,19 +45,31 @@
         <ImageButton
             android:id="@+id/pause"
             android:layout_width="36dip"
-            android:layout_height="25dip"
-            android:layout_weight="1"
-            android:scaleType="centerInside"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5dip"
             android:layout_marginBottom="5dip"
-            android:src="@mipmap/play"
-            android:background="@null"/>
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@mipmap/play" />
 
         <!--当前时间/总时间-->
+
+        <ImageButton
+            android:layout_width="23dp"
+            android:layout_height="20dp"
+            android:background="@null"
+            android:scaleType="centerInside"
+            android:src="@mipmap/next"
+            android:layout_marginStart="10dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginEnd="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="3dip"/>
+
         <LinearLayout
             android:layout_width="80dip"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:orientation="horizontal">
             <TextView android:id="@+id/time_current"
                 android:textSize="14sp"
@@ -92,50 +104,75 @@
                 android:textColor="@color/white" />
         </LinearLayout>
 
-        <!--是否允许自动旋转-->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/autorotation_tips"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center|end"
-                android:text="旋转"
-                android:textColor="@color/white" />
-
-            <Switch
-                android:id="@+id/rotationSwitch"
-                android:layout_width="45dip"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:checked="false" />
-        </LinearLayout>
-
-
-<!--        <TextView-->
-<!--            android:id="@+id/playSpeed"-->
+<!--        &lt;!&ndash;是否允许自动旋转&ndash;&gt;-->
+<!--        <LinearLayout-->
 <!--            android:layout_width="0dp"-->
 <!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="2"-->
-<!--            android:gravity="center"-->
-<!--            android:text="倍速"-->
-<!--            android:textColor="#ffffff" />-->
+<!--            android:layout_weight="5"-->
+<!--            android:layout_marginRight="15dip"-->
+<!--            android:layout_marginEnd="15dip"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:gravity="center|end"-->
+<!--                android:text="旋转"-->
+<!--                android:textColor="@color/white"/>-->
+
+<!--            <Switch-->
+<!--                android:id="@+id/rotationSwitch"-->
+<!--                android:layout_width="45dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_gravity="start"-->
+<!--                android:checked="true"/>-->
+<!--        </LinearLayout>-->
+
+        <!--弹幕开关按钮-->
+        <ImageButton
+            android:id="@+id/danmaButton"
+            android:layout_width="50dip"
+            android:layout_height="32dip"
+            android:layout_marginRight="50dip"
+            android:scaleType="centerInside"
+            android:src="@mipmap/danmaon"
+            android:background="@null"
+            android:layout_marginEnd="50dip" />
+
+        <TextView
+            android:id="@+id/selectnum"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dip"
+            android:layout_marginEnd="15dip"
+            android:gravity="center"
+            android:text="选集"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/playspeed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dip"
+            android:layout_marginEnd="15dip"
+            android:gravity="center"
+            android:text="倍速"
+            android:textColor="@color/white" />
+
+
+
+
 
         <!--全屏按钮-->
         <ImageButton
             android:id="@+id/fullscreen"
             android:layout_width="36dip"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dip"
-            android:layout_weight="1"
-            android:background="@null"
+            android:layout_height="25dip"
             android:scaleType="centerInside"
-            android:src="@mipmap/full_screen" />
+            android:layout_marginBottom="5dip"
+            android:src="@mipmap/full_screen"
+            android:background="@null"/>
     </LinearLayout>
 
 </LinearLayout>

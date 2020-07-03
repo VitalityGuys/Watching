@@ -1,6 +1,4 @@
-package tv.danmaku.ijk.media.example.widget.media;
-
-/*
+package tv.danmaku.ijk.media.example.widget.media;/*
  * Copyright (C) 2006 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,13 +15,16 @@ package tv.danmaku.ijk.media.example.widget.media;
  */
 
 
+import android.annotation.UnsupportedAppUsage;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
-//import android.support.annotation.NonNull;
-//import android.support.annotation.Nullable;
-//import android.support.v7.app.ActionBar;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,28 +36,42 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityManager;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.Switch;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
+import android.widget.Toast;
 
 import com.android.internal.policy.PhoneWindow;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Random;
 
+import master.flame.danmaku.controller.DrawHandler;
+import master.flame.danmaku.danmaku.model.BaseDanmaku;
+import master.flame.danmaku.danmaku.model.DanmakuTimer;
+import master.flame.danmaku.danmaku.model.IDanmakus;
+import master.flame.danmaku.danmaku.model.android.DanmakuContext;
+import master.flame.danmaku.danmaku.model.android.Danmakus;
+import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
+import master.flame.danmaku.ui.widget.DanmakuView;
+import tv.danmaku.ijk.media.example.Base.DanMu;
+import tv.danmaku.ijk.media.example.PlayLink;
 import tv.danmaku.ijk.media.example.R;
-import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
  * A view containing controls for a MediaPlayer. Typically contains the
@@ -65,16 +80,16 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * of the MediaPlayer.
  * <p>
  * The way to use this class is to instantiate it programmatically.
- * The MediaController will create a default set of controls
+ * The MyMediaController will create a default set of controls
  * and put them in a window floating above your application. Specifically,
  * the controls will float above the view specified with setAnchorView().
  * The window will disappear if left idle for three seconds and reappear
  * when the user touches the anchor view.
  * <p>
- * Functions like show() and hide() have no effect when MediaController
+ * Functions like show() and hide() have no effect when MyMediaController
  * is created in an xml layout.
  *
- * MediaController will hide and
+ * MyMediaController will hide and
  * show the buttons according to these rules:
  * <ul>
  * <li> The "previous" and "next" buttons are hidden until setPrevNextListeners()
@@ -82,91 +97,94 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
  * <li> The "previous" and "next" buttons are visible but disabled if
  *   setPrevNextListeners() was called with null listeners
  * <li> The "rewind" and "fastforward" buttons are shown unless requested
- *   otherwise by using the MediaController(Context, boolean) constructor
+ *   otherwise by using the MyMediaController(Context, boolean) constructor
  *   with the boolean set to false
  * </ul>
  */
 public class MyMediaController extends FrameLayout {
-    private ActionBar mActionBar;
 
-    private android.widget.MediaController.MediaPlayerControl mPlayer;
-    private Context mContext;
+    @UnsupportedAppUsage
+    private MediaPlayerControl mPlayer;
+    @UnsupportedAppUsage
+    private final Context mContext;
+    @UnsupportedAppUsage
     private View mAnchor;
+    @UnsupportedAppUsage
     private View mRoot;
+    @UnsupportedAppUsage
     private WindowManager mWindowManager;
+    @UnsupportedAppUsage
     private Window mWindow;
+    @UnsupportedAppUsage
     private View mDecor;
+    @UnsupportedAppUsage
     private WindowManager.LayoutParams mDecorLayoutParams;
+    @UnsupportedAppUsage
     private ProgressBar mProgress;
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private TextView mEndTime;
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     private TextView mCurrentTime;
+    @UnsupportedAppUsage
     private boolean mShowing;
     private boolean mDragging;
     private static final int sDefaultTimeout = 3000;
-    private boolean mUseFastForward;
+    private final boolean mUseFastForward;
     private boolean mFromXml;
     private boolean mListenersSet;
     private View.OnClickListener mNextListener, mPrevListener;
     StringBuilder mFormatBuilder;
     Formatter mFormatter;
+    @UnsupportedAppUsage
     private ImageButton mPauseButton;
-    private ImageButton mFfwdButton;
-    private ImageButton mRewButton;
-    private ImageButton mNextButton;
-    private ImageButton mPrevButton;
+    private ImageButton mDanmaButton;
     private ImageButton mFullScreenButton;
-    private TextView mspeedtext;
-    private Switch mRotationSwitch;
+    private TextView mSpeedButton;
+    private LinearLayout mSpeedLayout;
+    private IjkVideoView ijkVideoView;
+    private TextView mQuarter;
+    private TextView mHalf;
+    private TextView mThreeQuarter;
+    private TextView mNormal;
+    private TextView mFiveQuarter;
+    private TextView mSixQuarter;
+    private TextView mSevenQuarter;
+    private TextView mDouble;
+    private TextView mSelectNumButton;
+    private GridLayout mSelectNumlayout;
+    private ArrayList<PlayLink> mPlayLinks=new ArrayList<>();
+//    private ProgressBar mLoadProgressBar;
+    private DanmakuView mDanmakuView;
+    private String currentCid;
+    ArrayList<String> cids=new ArrayList<>();
+    private boolean showDanmaku;
+    private DanmakuContext danmakuContext;
+    private BaseDanmakuParser parser = new BaseDanmakuParser() {
+        @Override
+        protected IDanmakus parse() {
+            return new Danmakus();
+        }
+    };
+
+    @UnsupportedAppUsage
+    private ImageButton mFfwdButton;
+    @UnsupportedAppUsage
+    private ImageButton mRewButton;
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
+    private ImageButton mNextButton;
+    @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
+    private ImageButton mPrevButton;
     private CharSequence mPlayDescription;
     private CharSequence mPauseDescription;
-    private AccessibilityManager mAccessibilityManager;
+    private final AccessibilityManager mAccessibilityManager;
 
-    public MyMediaController(@NonNull Context context) {
-        super(context);
-        initView(context);
-    }
-
-    public MyMediaController(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public MyMediaController(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView(context);
-    }
-
-    public MyMediaController(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initView(context);
-    }
-
-    public MyMediaController(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView(context);
-    }
-
-    private void initView(Context context){
         mRoot = this;
         mContext = context;
         mUseFastForward = true;
         mFromXml = true;
-
-        initFloatingWindowLayout();
-        initFloatingWindow();
-//        mAccessibilityManager = AccessibilityManager.getInstance(context);
-        mAccessibilityManager= (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
-        IjkMediaPlayer.loadLibrariesOnce(null);
-        IjkMediaPlayer.native_profileBegin("libijkplayer.so");
-    }
-
-    public void setSupportActionBar(@Nullable ActionBar actionBar) {
-        mActionBar = actionBar;
-        if(actionBar!=null){
-            if (isShowing()) {
-//                Toast.makeText(mContext,"显示",Toast.LENGTH_SHORT).show();
-                actionBar.show();
-            } else {
-//                Toast.makeText(mContext,"隐藏",Toast.LENGTH_SHORT).show();
-                actionBar.hide();
-            }
-        }
-
+        mAccessibilityManager = AccessibilityManager.getInstance(context);
     }
 
     @Override
@@ -176,25 +194,22 @@ public class MyMediaController extends FrameLayout {
             initControllerView(mRoot);
     }
 
+    public MyMediaController(Context context, boolean useFastForward) {
+        super(context);
+        mContext = context;
+        mUseFastForward = useFastForward;
+        initFloatingWindowLayout();
+        initFloatingWindow();
+        mAccessibilityManager = AccessibilityManager.getInstance(context);
+    }
+
+    public MyMediaController(Context context) {
+        this(context, true);
+    }
+
     private void initFloatingWindow() {
         mWindowManager = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
-//        try {
-//            Class clazz = Class.forName("com.android.internal.policy.PhoneWindow");
-//            Constructor constructor = clazz.getConstructor(Context.class);
-//            mWindow = (Window) constructor.newInstance(mContext);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        String phone_window_calss = "com.android.internal.policy.impl.PhoneWindow";
-//        Class phoneWindowClass = null;
-//        try {
-//            phoneWindowClass = Class.forName(phone_window_calss);
-//            Constructor constructor = phoneWindowClass.getDeclaredConstructor(new Class[]{Context.class});
-//            mWindow = (Window) constructor.newInstance(mContext);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        mWindow=new PhoneWindow(mContext);
+        mWindow = new PhoneWindow(mContext);
         mWindow.setWindowManager(mWindowManager, null, null);
         mWindow.requestFeature(Window.FEATURE_NO_TITLE);
         mDecor = mWindow.getDecorView();
@@ -273,7 +288,7 @@ public class MyMediaController extends FrameLayout {
         }
     };
 
-    public void setMediaPlayer(android.widget.MediaController.MediaPlayerControl player) {
+    public void setMediaPlayer(MediaPlayerControl player) {
         mPlayer = player;
         updatePausePlay();
     }
@@ -313,66 +328,98 @@ public class MyMediaController extends FrameLayout {
     protected View makeControllerView() {
         LayoutInflater inflate = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        mRoot = inflate.inflate(com.android.internal.R.layout.media_controller, null);
-//        mRoot=inflate.inflate(R.layout.media_my_controller,null);
-        mRoot=inflate.inflate(R.layout.media_my_controller,null);
+        mRoot = inflate.inflate(R.layout.media_my_controller, null);
+
         initControllerView(mRoot);
 
         return mRoot;
     }
 
-    /**
-     * 进行各个控件的设置，如快进、快退、暂停播放、进度条等
-     * @param v
-     */
     private void initControllerView(View v) {
         Resources res = mContext.getResources();
         mPlayDescription = res
-                .getText(R.string.lockscreen_transport_play_description);
+                .getText(com.android.internal.R.string.lockscreen_transport_play_description);
         mPauseDescription = res
-                .getText(R.string.lockscreen_transport_pause_description);
-//        mPauseButton = (ImageButton) v.findViewById(com.android.internal.R.id.pause);
-        mPauseButton = (ImageButton) v.findViewById(R.id.pause);
+                .getText(com.android.internal.R.string.lockscreen_transport_pause_description);
+        mPauseButton = v.findViewById(R.id.pause);
         if (mPauseButton != null) {
             mPauseButton.requestFocus();
             mPauseButton.setOnClickListener(mPauseListener);
         }
 
-        mFullScreenButton=(ImageButton)findViewById(R.id.fullscreen);
+        mDanmaButton=v.findViewById(R.id.danmaButton);
+        if(mDanmaButton!=null){
+            mDanmaButton.setOnClickListener(mDanmaButtonListener);
+        }
+
+        mFullScreenButton=v.findViewById(R.id.fullscreen);
+        if(mFullScreenButton!=null){
+            mFullScreenButton.setOnClickListener(mFullScreenListener);
+        }
+
+        mSpeedButton=v.findViewById(R.id.playspeed);
+        if(mSpeedButton!=null){
+            mSpeedButton.setOnClickListener(mSpeedListener);
+        }
+        ijkVideoView= ((Activity)mContext).findViewById(R.id.video_view);
+        //找到倍速控件
+        mQuarter=((Activity)mContext).findViewById(R.id.mQuarter);
+        mHalf=((Activity)mContext).findViewById(R.id.mHalf);
+        mThreeQuarter=((Activity)mContext).findViewById(R.id.mThreeQuarter);
+        mNormal=((Activity)mContext).findViewById(R.id.mNormal);
+        mFiveQuarter=((Activity)mContext).findViewById(R.id.mFiveQuarter);
+        mSixQuarter=((Activity)mContext).findViewById(R.id.mSixQuarter);
+        mSevenQuarter=((Activity)mContext).findViewById(R.id.mSevenQuarter);
+        mDouble=((Activity)mContext).findViewById(R.id.mDouble);
+        //添加监听
+        mQuarter.setOnClickListener(playSpeedButtonListener);
+        mHalf.setOnClickListener(playSpeedButtonListener);
+        mThreeQuarter.setOnClickListener(playSpeedButtonListener);
+        mNormal.setOnClickListener(playSpeedButtonListener);
+        mFiveQuarter.setOnClickListener(playSpeedButtonListener);
+        mSixQuarter.setOnClickListener(playSpeedButtonListener);
+        mSevenQuarter.setOnClickListener(playSpeedButtonListener);
+        mDouble.setOnClickListener(playSpeedButtonListener);
+
+        mSelectNumButton=v.findViewById(R.id.selectnum);
+        if(mSelectNumButton!=null){
+            mSelectNumButton.setOnClickListener(mSelectNumListener);
+        }
+
+        mDanmakuView=((Activity)mContext).findViewById(R.id.danmaku_view);
+
+//        mLoadProgressBar=((Activity)mContext).findViewById(R.id.loadprogressbar);
 
 
 
-        mRotationSwitch=(Switch)findViewById(R.id.rotationSwitch);
-//        if(mFullScreenButton!=null){
-//            mFullScreenButton.setOnClickListener(mFullScreenListener);
-//        }
 
-//        mFfwdButton = (ImageButton)v.findViewById(R.id.ffwd);
-//        if (mFfwdButton != null) {
-//            mFfwdButton.setOnClickListener(mFfwdListener);
-//            if (!mFromXml) {
-//                mFfwdButton.setVisibility(mUseFastForward ? View.VISIBLE : View.GONE);
-//            }
-//        }
+        mFfwdButton = v.findViewById(com.android.internal.R.id.ffwd);
+        if (mFfwdButton != null) {
+            mFfwdButton.setOnClickListener(mFfwdListener);
+            if (!mFromXml) {
+                mFfwdButton.setVisibility(mUseFastForward ? View.VISIBLE : View.GONE);
+            }
+        }
 
-//        mRewButton = (ImageButton)v.findViewById(R.id.rew);
-//        if (mRewButton != null) {
-//            mRewButton.setOnClickListener(mRewListener);
-//            if (!mFromXml) {
-//                mRewButton.setVisibility(mUseFastForward ? View.VISIBLE : View.GONE);
-//            }
-//        }
+        mRewButton = v.findViewById(com.android.internal.R.id.rew);
+        if (mRewButton != null) {
+            mRewButton.setOnClickListener(mRewListener);
+            if (!mFromXml) {
+                mRewButton.setVisibility(mUseFastForward ? View.VISIBLE : View.GONE);
+            }
+        }
 
         // By default these are hidden. They will be enabled when setPrevNextListeners() is called
-//        mNextButton = (ImageButton)v.findViewById(R.id.next);
-//        if (mNextButton != null && !mFromXml && !mListenersSet) {
-//            mNextButton.setVisibility(View.GONE);
-//        }
-//        mPrevButton = (ImageButton)v.findViewById(R.id.prev);
-//        if (mPrevButton != null && !mFromXml && !mListenersSet) {
-//            mPrevButton.setVisibility(View.GONE);
-//        }
+        mNextButton = v.findViewById(com.android.internal.R.id.next);
+        if (mNextButton != null && !mFromXml && !mListenersSet) {
+            mNextButton.setVisibility(View.GONE);
+        }
+        mPrevButton = v.findViewById(com.android.internal.R.id.prev);
+        if (mPrevButton != null && !mFromXml && !mListenersSet) {
+            mPrevButton.setVisibility(View.GONE);
+        }
 
-        mProgress = (ProgressBar) v.findViewById(R.id.mediacontroller_progress);
+        mProgress = v.findViewById(R.id.mediacontroller_progress);
         if (mProgress != null) {
             if (mProgress instanceof SeekBar) {
                 SeekBar seeker = (SeekBar) mProgress;
@@ -381,8 +428,8 @@ public class MyMediaController extends FrameLayout {
             mProgress.setMax(1000);
         }
 
-        mEndTime = (TextView) v.findViewById(R.id.time);
-        mCurrentTime = (TextView) v.findViewById(R.id.time_current);
+        mEndTime = v.findViewById(R.id.time);
+        mCurrentTime = v.findViewById(R.id.time_current);
         mFormatBuilder = new StringBuilder();
         mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
 
@@ -442,7 +489,6 @@ public class MyMediaController extends FrameLayout {
             if (mPauseButton != null) {
                 mPauseButton.requestFocus();
             }
-            mActionBar.show();
             disableUnsupportedButtons();
             updateFloatingWindowLayout();
             mWindowManager.addView(mDecor, mDecorLayoutParams);
@@ -466,7 +512,6 @@ public class MyMediaController extends FrameLayout {
     }
 
     /**
-     * 将控制器隐藏
      * Remove the controller from the screen.
      */
     public void hide() {
@@ -477,9 +522,8 @@ public class MyMediaController extends FrameLayout {
             try {
                 removeCallbacks(mShowProgress);
                 mWindowManager.removeView(mDecor);
-                mActionBar.hide();
             } catch (IllegalArgumentException ex) {
-                Log.w("MediaController", "already removed");
+                Log.w("MyMediaController", "already removed");
             }
             mShowing = false;
         }
@@ -621,34 +665,251 @@ public class MyMediaController extends FrameLayout {
         }
     };
 
-
-    /**
-     * 更新播放与暂停的按钮图片
-     */
+    @UnsupportedAppUsage
     private void updatePausePlay() {
         if (mRoot == null || mPauseButton == null)
             return;
 
         if (mPlayer.isPlaying()) {
-            mPauseButton.setImageResource(R.mipmap.pause);
+            mPauseButton.setImageResource(com.android.internal.R.drawable.ic_media_pause);
             mPauseButton.setContentDescription(mPauseDescription);
         } else {
-            mPauseButton.setImageResource(R.mipmap.play);
+            mPauseButton.setImageResource(com.android.internal.R.drawable.ic_media_play);
             mPauseButton.setContentDescription(mPlayDescription);
         }
     }
 
-    /**
-     * 暂停与播放控制
-     */
     private void doPauseResume() {
         if (mPlayer.isPlaying()) {
             mPlayer.pause();
+            mDanmakuView.pause();
         } else {
             mPlayer.start();
+            mDanmakuView.resume();
         }
         updatePausePlay();
     }
+
+    private final View.OnClickListener mDanmaButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (mDanmakuView!=null&&mDanmakuView.isShown()) {
+                mDanmakuView.hide();
+            } else if(mDanmakuView!=null&&!mDanmakuView.isShown()) {
+                mDanmakuView.show();
+            }
+            show(sDefaultTimeout);
+            if (mRoot == null || mDanmaButton == null)
+                return;
+
+            if (mDanmakuView.isShown()) {
+                mDanmaButton.setImageResource(R.mipmap.danmaon);
+            } else {
+                mDanmaButton.setImageResource(R.mipmap.danmaoff);
+            }
+        }
+    };
+
+    //全屏按钮点击事件
+    private final View.OnClickListener mFullScreenListener=new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(getContext(),"点击全屏",Toast.LENGTH_SHORT).show();
+            if(mContext.getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){//如果为竖屏，则设置为全屏
+                ((Activity)mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                ((Activity)mContext).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            }else{//为横屏则退出全屏
+                ((Activity)mContext).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                ((Activity)mContext).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            }
+
+        }
+    };
+
+    //倍速事件
+    private final View.OnClickListener mSpeedListener=new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mSpeedLayout=((Activity)mContext).findViewById(R.id.speedlayout);
+            if(mSpeedLayout.getVisibility()==View.INVISIBLE){
+                mSpeedLayout.setVisibility(VISIBLE);
+                Toast.makeText(getContext(),"显示",Toast.LENGTH_SHORT).show();
+            }else{
+                mSpeedLayout.setVisibility(INVISIBLE);
+                Toast.makeText(getContext(),"隐藏",Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    private final View.OnClickListener playSpeedButtonListener=new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            resetPlaySpeedButtonColor("#ffffff");
+            ((TextView)v).setTextColor(Color.parseColor("#fb7299"));
+            ijkVideoView.setPlaySpeed(Double.parseDouble(((TextView)v).getText().toString().replace("X","")));
+        }
+    };
+
+    //重置倍速文本为同色
+    private void resetPlaySpeedButtonColor(String color){
+        mQuarter.setTextColor(Color.parseColor(color));
+        mHalf.setTextColor(Color.parseColor(color));
+        mThreeQuarter.setTextColor(Color.parseColor(color));
+        mNormal.setTextColor(Color.parseColor(color));
+        mFiveQuarter.setTextColor(Color.parseColor(color));
+        mSixQuarter.setTextColor(Color.parseColor(color));
+        mSevenQuarter.setTextColor(Color.parseColor(color));
+        mDouble.setTextColor(Color.parseColor(color));
+    }
+
+    //设置选集
+    private final View.OnClickListener mSelectNumListener=new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mSelectNumlayout=((Activity)mContext).findViewById(R.id.selectnumlayout);
+            ScrollView scrollView=((Activity)mContext).findViewById(R.id.selectnumscrolllayout);
+            setPlayList(mPlayLinks,mSelectNumlayout);
+            if(scrollView.getVisibility()==INVISIBLE){
+                Toast.makeText(getContext(),"显示2",Toast.LENGTH_SHORT).show();
+                scrollView.setVisibility(VISIBLE);
+            }else if(scrollView.getVisibility()==VISIBLE){
+                Toast.makeText(getContext(),"隐藏2",Toast.LENGTH_SHORT).show();
+                scrollView.setVisibility(INVISIBLE);
+            }
+        }
+    };
+
+    //设置视频的选集列表
+    private void setPlayList(final ArrayList<PlayLink> PlayList, final GridLayout gridLayout){
+        GridLayout.LayoutParams params = null;
+        int screenWidth = 700;
+        int length=PlayList.size();
+        int i,j,k=0;
+        for(i=0;i<length/4+1;i++){
+            for(j=0;j<4;j++){
+                if(k>=length){
+                    break;
+                }
+                final TextView textView=new TextView(mContext);
+                textView.setText(PlayList.get(k).getVideonum());
+                textView.setWidth((int) ((screenWidth)/4.0));
+                textView.setTextColor(Color.parseColor("#ffffff"));
+                //设置行
+                GridLayout.Spec rowSpec=GridLayout.spec(i);
+                //设置列
+                GridLayout.Spec columnSpec=GridLayout.spec(j);
+                params=new GridLayout.LayoutParams(rowSpec,columnSpec);
+                params.setMargins(5, 5, 5, 5);
+                final int index=k;
+
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        for (int i = 0; i < gridLayout.getChildCount(); i++) {//清空所有背景色
+                            TextView t = (TextView) gridLayout.getChildAt(i);
+                            t.setBackgroundColor(Color.parseColor("#00000000"));
+                        }
+                        //设置选中的按钮背景色
+                        textView.setBackgroundColor(Color.parseColor("#55fb7299"));
+                        //播放选中内容
+                        ijkVideoView.setVideoPath(PlayList.get(index).getVideourl());
+                        setCurrentCid(cids.get(index));
+                    }
+                });
+                gridLayout.addView(textView,params);
+                k++;
+            }
+        }
+    }
+
+//    //弹幕回调
+//    private final DrawHandler.Callback mDanmakuCallback=new DrawHandler.Callback() {
+//        @Override
+//        public void prepared() {
+//            showDanmaku = true;
+//            mDanmakuView.start();
+////            generateSomeDanmaku("171652111");
+//            generateSomeDanmaku(currentCid);
+//        }
+//
+//        @Override
+//        public void updateTimer(DanmakuTimer timer) {
+//
+//        }
+//
+//        @Override
+//        public void danmakuShown(BaseDanmaku danmaku) {
+//
+//        }
+//
+//        @Override
+//        public void drawingFinished() {
+//
+//        }
+//    };
+
+
+    private void addDanmaku(DanMu danMu, boolean withBorder) {
+        BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(danMu.getType());
+        danmaku.text = danMu.getContent();
+        danmaku.padding = 5;
+        danmaku.textSize = sp2px(danMu.getFontsize()-6);
+        danmaku.textColor = danMu.getColor();
+        Log.e("!!!", mDanmakuView.getCurrentTime()+"addDanmaku: "+danMu.getTime());
+        danmaku.setTime((long) danMu.getTime()*1000);
+        if (withBorder) {
+            danmaku.borderColor = Color.GREEN;
+        }
+        mDanmakuView.addDanmaku(danmaku);
+    }
+
+    /**
+     * sp转px的方法。
+     */
+    public int sp2px(float spValue) {
+        final float fontScale = getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
+    /**
+     * 随机生成一些弹幕内容以供测试
+     */
+    private void generateSomeDanmaku(final String cid) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Document document=Jsoup.connect("http://comment.bilibili.com/"+cid+".xml").get();
+                    Elements elements=document.select("d");
+                    ArrayList<DanMu> arrayList=new ArrayList<>();
+                    for (Element element:elements){
+                        Log.e("$$$", "run: "+element.attr("p") );
+                        String[]strings=element.attr("p").split(",");
+                        String content=element.text();
+                        float time=Float.parseFloat(strings[0]);
+                        int type=Integer.parseInt(strings[1]);
+                        int color=Integer.parseInt(strings[3]);
+                        int fontsize=Integer.parseInt(strings[2]);
+                        arrayList.add(new DanMu(content,time,type,color,fontsize));
+                    }
+                    for(int i=0;i<arrayList.size();i++){
+                        int time = new Random().nextInt(300);
+                        DanMu danMu = arrayList.get(i);
+                        addDanmaku(danMu, false);
+//                        try {
+//                            Thread.sleep(time);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
 
     // There are two scenarios that can trigger the seekbar listener to trigger:
     //
@@ -661,6 +922,7 @@ public class MyMediaController extends FrameLayout {
     // The second scenario involves the user operating the scroll ball, in this
     // case there WON'T BE onStartTrackingTouch/onStopTrackingTouch notifications,
     // we will simply apply the updated position without suspending regular updates.
+    @UnsupportedAppUsage
     private final OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {
         @Override
         public void onStartTrackingTouch(SeekBar bar) {
@@ -687,6 +949,8 @@ public class MyMediaController extends FrameLayout {
             long duration = mPlayer.getDuration();
             long newposition = (duration * progress) / 1000L;
             mPlayer.seekTo( (int) newposition);
+            //移动弹幕时间 延后5s等待视频加载
+            mDanmakuView.seekTo(newposition);
             if (mCurrentTime != null)
                 mCurrentTime.setText(stringForTime( (int) newposition));
         }
@@ -731,9 +995,10 @@ public class MyMediaController extends FrameLayout {
 
     @Override
     public CharSequence getAccessibilityClassName() {
-        return android.widget.MediaController.class.getName();
+        return MyMediaController.class.getName();
     }
 
+    @UnsupportedAppUsage
     private final View.OnClickListener mRewListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -746,6 +1011,7 @@ public class MyMediaController extends FrameLayout {
         }
     };
 
+    @UnsupportedAppUsage
     private final View.OnClickListener mFfwdListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -786,45 +1052,71 @@ public class MyMediaController extends FrameLayout {
             }
         }
     }
-
-    //全屏事件，外部传入
-    public void setFullScreenListener(View.OnClickListener onClickListener){
-//        mFullScreenListener=onClickListener;
-        mFullScreenButton=findViewById(R.id.fullscreen);
-        mFullScreenButton.setOnClickListener(onClickListener);
+    public void setPlayLinks(ArrayList<PlayLink> playLinks){
+        mPlayLinks=playLinks;
+    }
+    public void setToolBarTitle(String title){
+        TextView textView=((Activity)mContext).findViewById(R.id.toolbar_title);
+        textView.setText(title);
+    }
+    public void setCids(ArrayList<String> cids){
+        this.cids=cids;
     }
 
-//    //设置倍速监听
-//    public void setPlayerSpeedListener(View.OnClickListener onClickListener){
-//        mspeedtext =findViewById(R.id.playSpeed);
-//        mspeedtext.setOnClickListener(onClickListener);
-//    }
+    public void setCurrentCid(final String currentCid) {
+        this.currentCid = currentCid;
+        if(mDanmakuView!=null){
+            mDanmakuView.release();
+            mDanmakuView.enableDanmakuDrawingCache(true);
+            mDanmakuView.setCallback(new DrawHandler.Callback() {
+                @Override
+                public void prepared() {
+                    showDanmaku = true;
+//                    mDanmakuView.start();
+                    long ms=ijkVideoView.getCurrentPosition();
+//                    if(ms >0) {
+//                        mDanmakuView.start(ms);
+//                    }else{
+//                        mDanmakuView.start();
+//                    }
+                    while (true){
+                        if(ijkVideoView.isPlaying()){
+                            mDanmakuView.start();
+                            break;
+                        }
 
-    public void setRotationSwitchListener(CompoundButton.OnCheckedChangeListener rotationSwitchListener){
-//        mFullScreenListener=onClickListener;
-        mRotationSwitch=findViewById(R.id.rotationSwitch);
-        mRotationSwitch.setOnCheckedChangeListener(rotationSwitchListener);
-    }
+                    }
+                    //generateSomeDanmaku("171652111");
+                    generateSomeDanmaku(currentCid);
+                }
 
-    //直播时隐藏进度条
-    public void hideProgressBar(boolean hide){
-        if(mProgress!=null){
-            if(hide){
-                mProgress.setVisibility(GONE);
-            }else {
-                mProgress.setVisibility(VISIBLE);
-            }
+                @Override
+                public void updateTimer(DanmakuTimer timer) {
+
+                }
+
+                @Override
+                public void danmakuShown(BaseDanmaku danmaku) {
+
+                }
+
+                @Override
+                public void drawingFinished() {
+
+                }
+            });
+            //设置是否禁止重叠
+            HashMap<Integer, Boolean> overlappingEnablePair = new HashMap<>(16);
+            overlappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_RL, true);
+            overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_TOP, true);
+            danmakuContext = DanmakuContext.create()
+            .setDuplicateMergingEnabled(true)//合并重复弹幕
+            .preventOverlapping(overlappingEnablePair)//禁止重叠
+            ;
+//            parser.load()
+            mDanmakuView.prepare(parser, danmakuContext);
         }
-
     }
-
-    private ArrayList<View> mShowOnceArray = new ArrayList<View>();
-    public void showOnce(@NonNull View view) {
-        mShowOnceArray.add(view);
-        view.setVisibility(View.VISIBLE);
-        show();
-    }
-
 
     public interface MediaPlayerControl {
         void    start();

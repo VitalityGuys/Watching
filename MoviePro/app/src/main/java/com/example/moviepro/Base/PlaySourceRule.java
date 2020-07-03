@@ -1,10 +1,7 @@
 package com.example.moviepro.Base;
 
-import android.util.ArrayMap;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class PlaySourceRule {
     private String PlaySourceGroup;
