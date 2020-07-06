@@ -813,6 +813,7 @@ public class MyMediaController extends FrameLayout {
                         textView.setBackgroundColor(Color.parseColor("#55fb7299"));
                         //播放选中内容
                         ijkVideoView.setVideoPath(PlayList.get(index).getVideourl());
+                        if(cids.size()>index)
                         setCurrentCid(cids.get(index));
                     }
                 });
@@ -1053,7 +1054,8 @@ public class MyMediaController extends FrameLayout {
         }
     }
     public void setPlayLinks(ArrayList<PlayLink> playLinks){
-        mPlayLinks=playLinks;
+        mPlayLinks.addAll(playLinks);
+//        mPlayLinks=playLinks;
     }
     public void setToolBarTitle(String title){
         TextView textView=((Activity)mContext).findViewById(R.id.toolbar_title);

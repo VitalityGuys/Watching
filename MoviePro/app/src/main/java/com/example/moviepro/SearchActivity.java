@@ -129,18 +129,18 @@ public class SearchActivity extends AppCompatActivity {
         videolist.add(new VideoInfo("cctv2  财经","直播","http://ivi.bupt.edu.cn/hls/cctv2hd.m3u8"));
         videolist.add(new VideoInfo("cctv3  综艺","直播","http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8"));
         videolist.add(new VideoInfo("cctv4  中文国际（亚）","直播","http://ivi.bupt.edu.cn/hls/cctv4hd.m3u8"));
-        videolist.add(new VideoInfo("cctv5  体育","直播","http://120.241.133.167/outlivecloud-cdn.ysp.cctv.cn/cctv/2000205103.m3u8"));
+        videolist.add(new VideoInfo("cctv5  体育","直播","http://39.135.19.142:18890/PLTV/88888888/224/3221226024/1/index.m3u8?fmt=ts2hls"));
         videolist.add(new VideoInfo("cctv5+ 体育赛事","直播","http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8"));
         videolist.add(new VideoInfo("cctv6  电影","直播","http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8"));
         videolist.add(new VideoInfo("cctv7  国防军事","直播","http://ivi.bupt.edu.cn/hls/cctv7hd.m3u8"));
         videolist.add(new VideoInfo("cctv8  电视剧","直播","http://ivi.bupt.edu.cn/hls/cctv8hd.m3u8"));
         videolist.add(new VideoInfo("cctv9  记录","直播","http://ivi.bupt.edu.cn/hls/cctv9hd.m3u8"));
         videolist.add(new VideoInfo("cctv10 科教","直播","http://ivi.bupt.edu.cn/hls/cctv10hd.m3u8"));
-        videolist.add(new VideoInfo("cctv11 戏曲","直播","http://120.241.133.167/outlivecloud-cdn.ysp.cctv.cn/cctv/2000204103.m3u8"));
+        videolist.add(new VideoInfo("cctv11 戏曲","直播","http://39.135.19.142:18890/PLTV/88888888/224/3221225746/1/index.m3u8?fmt=ts2hls"));
         videolist.add(new VideoInfo("cctv12 社会与法","直播","http://ivi.bupt.edu.cn/hls/cctv12hd.m3u8"));
-        videolist.add(new VideoInfo("cctv13 新闻","直播","https://xigua-cdn.haima-zuida.com/20200121/1022_227c1fa5/index.m3u8"));
+        videolist.add(new VideoInfo("cctv13 新闻","直播","http://39.135.19.142:18890/PLTV/88888888/224/3221225748/1/index.m3u8?fmt=ts2hls"));
         videolist.add(new VideoInfo("cctv14 少儿","直播","http://ivi.bupt.edu.cn/hls/cctv14hd.m3u8"));
-        videolist.add(new VideoInfo("cctv15 音乐","直播","http://120.241.133.167/outlivecloud-cdn.ysp.cctv.cn/cctv/2000205003.m3u8"));
+        videolist.add(new VideoInfo("cctv15 音乐","直播","http://39.135.19.142:18890/PLTV/88888888/224/3221225749/1/index.m3u8?fmt=ts2hls"));
         videolist.add(new VideoInfo("cctv17 农业农村","直播","http://ivi.bupt.edu.cn/hls/cctv17hd.m3u8"));
 
         VideoAdapter videoAdapter=new VideoAdapter(videolist);

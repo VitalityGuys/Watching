@@ -178,7 +178,7 @@ public class PlayActivity extends AppCompatActivity {
                     public void run() {
                         //设置详细信息
                         Glide.with(PlayActivity.this).load(videoDetail.getCoverimage()).into(coverimg);
-                        playnum.setText(videoDetail.getPlaylists_m3u8().get(0).getVideonum());
+
                         videotype.setText(videoDetail.getVideotype());
                         videoname.setText(videoDetail.getVideoname());
                         videodirector.setText(videoDetail.getDirector());
@@ -199,17 +199,36 @@ public class PlayActivity extends AppCompatActivity {
 
 
 
+                        if(videoDetail.getPlaylists_mp4().size()!=0){
+                            playnum.setText(videoDetail.getPlaylists_mp4().get(0).getVideonum());
+                            playerManager.setVideoTitle(videoDetail.getVideoname()+" "+videoDetail.getPlaylists_mp4().get(0).getVideonum());
+                        }else if(videoDetail.getPlaylists_m3u8().size()!=0){
+                            playnum.setText(videoDetail.getPlaylists_m3u8().get(0).getVideonum());
+                            playerManager.setVideoTitle(videoDetail.getVideoname()+" "+videoDetail.getPlaylists_m3u8().get(0).getVideonum());
+                        }else if(videoDetail.getPlaylists_web().size()!=0){
+                            playnum.setText(videoDetail.getPlaylists_web().get(0).getVideonum());
+                            playerManager.setVideoTitle(videoDetail.getVideoname()+" "+videoDetail.getPlaylists_web().get(0).getVideonum());
+                        }else{
+                            Toast.makeText(PlayActivity.this,"此视频无法播放，换个别的吧",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
 
+                        if(videoDetail.getPlaylists_mp4().size()!=0){
+                            playerManager.setPlaylist(videoDetail.getPlaylists_mp4());
+                        }
+                        if(videoDetail.getPlaylists_m3u8().size()!=0){
+                            playerManager.setPlaylist(videoDetail.getPlaylists_m3u8());
+                        }
+                        if(videoDetail.getPlaylists_web().size()!=0){
+                            playerManager.setPlaylist(videoDetail.getPlaylists_web());
+                        }
 
-
-                        playerManager.setPlaylist(videoDetail.getPlaylists_m3u8());
                         playerManager.setVideoPath(videoDetail.getPlaylists_m3u8().get(0).getVideourl());
                         if(cids!=null&&cids.size()!=0){
                             playerManager.setCids(cids);
                             playerManager.setCurrentCid(cids.get(0));
                         }
 
-                        playerManager.setVideoTitle(videoDetail.getVideoname()+" "+videoDetail.getPlaylists_m3u8().get(0).getVideonum());
                         playerManager.start();
                     }
                 });
@@ -249,8 +268,9 @@ public class PlayActivity extends AppCompatActivity {
                 final Button button=new Button(PlayActivity.this);
                 button.setText(PlayList.get(k).getVideonum());
                 button.setWidth((int) ((screenWidth-60)/4.0));
+                button.setBackgroundColor(Color.parseColor("#55d6d7d7"));
                 if(k==0){
-                    button.setBackgroundColor(Color.parseColor("#fb7299"));
+                    button.setBackgroundColor(Color.parseColor("#55fb7299"));
                 }
                 //设置行
                 GridLayout.Spec rowSpec=GridLayout.spec(i);
@@ -281,10 +301,10 @@ public class PlayActivity extends AppCompatActivity {
 
                             for (int i = 0; i < gridLayout.getChildCount(); i++) {//清空所有背景色
                                 Button b = (Button) gridLayout.getChildAt(i);
-                                b.setBackgroundColor(Color.parseColor("#d6d7d7"));
+                                b.setBackgroundColor(Color.parseColor("#55d6d7d7"));
                             }
                             //设置选中的按钮背景色
-                            button.setBackgroundColor(Color.parseColor("#fb7299"));
+                            button.setBackgroundColor(Color.parseColor("#55fb7299"));
                             playnum.setText(PlayList.get(index).getVideonum());
                             Toast.makeText(PlayActivity.this,"正在加载"+PlayList.get(index).getVideonum(),Toast.LENGTH_SHORT).show();
                         }

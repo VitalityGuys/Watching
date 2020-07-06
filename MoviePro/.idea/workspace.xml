@@ -29,6 +29,10 @@
       <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_playlive.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/videolist.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/searchbg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/searchbg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/searchbg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/searchbg.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/Base/DanMu.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/MyIJKVideoView.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/PlayLink.java" afterDir="false" />
@@ -84,7 +88,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="cc7a47ca" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="1B99C89D" />
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
@@ -94,11 +98,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/MyMediaController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="913" column="65" selection-start-line="913" selection-start-column="65" selection-end-line="913" selection-end-column="65" />
+            <state relative-caret-position="23628">
+              <caret line="809" column="68" selection-start-line="809" selection-start-column="68" selection-end-line="809" selection-end-column="68" />
               <folding>
                 <element signature="docComment;class#MyMediaController#0" />
               </folding>
@@ -124,8 +128,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/SearchActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4191">
-              <caret line="261" column="83" selection-start-line="261" selection-start-column="83" selection-end-line="261" selection-end-column="83" />
+            <state relative-caret-position="1782">
+              <caret line="132" column="50" selection-start-line="132" selection-start-column="50" selection-end-line="132" selection-end-column="50" />
               <folding>
                 <element signature="method#initPlayResource#0;class#SearchActivity#0" />
                 <element signature="method#initSpinnerItems#0;class#SearchActivity#0" />
@@ -139,41 +143,39 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Utils/ParseHtml.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="38" column="70" selection-start-line="38" selection-start-column="70" selection-end-line="38" selection-end-column="70" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="docComment;method#parsedetailinfo#0;class#ParseHtml#0" />
-                <element signature="method#ParsePlayResource#0;class#ParseHtml#0" />
-              </folding>
+            <state relative-caret-position="264">
+              <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
             </state>
           </provider>
+          <provider editor-type-id="android-designer2" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_playlive.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayerManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2244">
-              <caret line="103" column="5" selection-start-line="103" selection-start-column="5" selection-end-line="103" selection-end-column="5" />
+            <state relative-caret-position="2310">
+              <caret line="105" column="34" selection-start-line="105" selection-start-column="34" selection-end-line="105" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#init#0;class#PlayerManager#0" />
                 <element signature="e#2165#2166#0" expanded="true" />
                 <element signature="e#2199#2200#0" expanded="true" />
                 <element signature="method#backPressed#0;class#PlayerManager#0" />
-                <element signature="method#setPlaylist#0;class#PlayerManager#0" />
+                <element signature="method#getVideoLink#0;class#PlayerManager#0" />
+                <element signature="method#getCids#0;class#PlayerManager#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Adapter/VideoAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2772">
-              <caret line="99" column="48" selection-start-line="99" selection-start-column="48" selection-end-line="99" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -181,8 +183,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8052">
-              <caret line="278" column="42" selection-start-line="278" selection-start-column="42" selection-end-line="278" selection-end-column="42" />
+            <state relative-caret-position="7788">
+              <caret line="270" column="69" selection-start-line="270" selection-start-column="69" selection-end-line="270" selection-end-column="69" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#onBackPressed#0;class#PlayActivity#0" />
@@ -193,27 +195,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/IjkVideoView.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="39765">
-              <caret line="1299" column="81" selection-start-line="1299" selection-start-column="81" selection-end-line="1299" selection-end-column="81" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/res/layout/activity_player.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="18" column="47" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="47" />
-              <folding>
-                <element signature="e#780#1058#0" />
-                <element signature="e#1090#4305#0" />
-                <element signature="e#4335#4909#0" />
-                <element signature="e#4919#5178#0" />
-                <element signature="e#5189#5572#0" />
-              </folding>
+            <state relative-caret-position="377">
+              <caret line="92" column="31" selection-start-line="92" selection-start-column="31" selection-end-line="92" selection-end-column="31" />
             </state>
           </provider>
           <provider editor-type-id="android-designer2" />
@@ -250,6 +236,12 @@
       <find>//移动弹幕时间</find>
     </findStrings>
   </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="F:\androidproject\secretkey.jks" />
+    <option name="KEY_ALIAS" value="key0" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -271,26 +263,26 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/bean/Ruledetail.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Manager/PlaySourceRuleManager.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Base/VideoDetail.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_playlive.xml" />
         <option value="$PROJECT_DIR$/ijkplayer-example/build.gradle" />
         <option value="$PROJECT_DIR$/ijkplayer-example/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/Utils/ParseHtml.java" />
         <option value="$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/Utils/HttpUtil.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/SearchActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Adapter/VideoAdapter.java" />
         <option value="$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/Base/DanMu.java" />
         <option value="$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/IjkVideoView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java" />
         <option value="$PROJECT_DIR$/ijkplayer-example/src/main/res/layout/media_my_controller.xml" />
-        <option value="$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/MyMediaController.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayerManager.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Utils/ParseHtml.java" />
         <option value="$PROJECT_DIR$/ijkplayer-example/src/main/res/layout/activity_player.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/SearchActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml" />
+        <option value="$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/MyMediaController.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_playlive.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml" />
       </list>
     </option>
   </component>
@@ -305,86 +297,11 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="moviepro" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="moviepro" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="Adapter" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="moviepro" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="Manager" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="example" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="example" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="Base" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="example" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="widget" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="example" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="widget" type="462c0819:PsiDirectoryNode" />
-              <item name="media" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
-              <item name="ijkplayer-example" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
             <path>
               <item name="MoviePro" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
@@ -393,17 +310,19 @@
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="cc7a47ca" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-07-03T02:35:17.276Z" />
+    <property name="ExportApk.ApkPath" value="F:\androidproject\Watching\MoviePro\app" />
+    <property name="ExportApk.BuildVariants" value="release" />
+    <property name="ExportApk.SignV1" value="true" />
+    <property name="ExportApk.SignV2" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/ijkplayer-example/src/main/res/mipmap-xhdpi" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi" />
     <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -420,11 +339,11 @@
       <recent name="com.example.moviepro.Base" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="F:\androidproject\ijkplayerManager\ijkplayer-\ijkplayer-example\src\main\java\tv\danmaku\ijk\media\example" />
-      <recent name="F:\androidproject\ijkplayerManager\ijkplayer-\app\src\main\res\layout" />
-      <recent name="F:\androidproject\ijkplayerManager\ijkplayer-\app\src\main\java\com\example\moviepro" />
-      <recent name="F:\androidproject\ijkplayerManager\ijkplayer-\ijkplayer-example\src\main\res\mipmap-xhdpi" />
-      <recent name="F:\androidproject\ijkplayerManager\ijkplayer-\ijkplayer-example\src\main\res\mipmap-mdpi" />
+      <recent name="F:\androidproject\Watching\MoviePro\app\src\main\res\mipmap-xxxhdpi" />
+      <recent name="F:\androidproject\Watching\MoviePro\app\src\main\res\mipmap-xxhdpi" />
+      <recent name="F:\androidproject\Watching\MoviePro\app\src\main\res\mipmap-xhdpi" />
+      <recent name="F:\androidproject\Watching\MoviePro\app\src\main\res\mipmap-mdpi" />
+      <recent name="F:\androidproject\Watching\MoviePro\app\src\main\res\mipmap-hdpi" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -528,7 +447,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.1684435" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.1684435" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -536,14 +455,14 @@
       <window_info id="Designer" order="6" />
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
-      <window_info anchor="bottom" id="Run" order="0" sideWeight="0.4989339" weight="0.5493562" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="1" visible="true" weight="0.33261803" />
+      <window_info anchor="bottom" id="Run" order="0" sideWeight="0.4989339" weight="0.4914163" />
+      <window_info anchor="bottom" id="Logcat" order="1" weight="0.33261803" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32939914" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.32939914" />
       <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.49946696" weight="0.32939914" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5010661" side_tool="true" weight="0.5493562" />
       <window_info anchor="bottom" id="Version Control" order="6" weight="0.32939914" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49946696" weight="0.2585837" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49946696" visible="true" weight="0.2585837" />
       <window_info anchor="bottom" id="Find" order="8" visible="true" weight="0.32939914" />
       <window_info anchor="bottom" id="Android Profiler" order="9" weight="0.32939914" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
@@ -669,17 +588,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Manager/PlayerManager.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/videolist.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Base/PlayLink.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Base/VideoDetail.java">
@@ -694,14 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_playlive.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="5" column="28" lean-forward="true" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Utils/HttpUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
@@ -713,14 +616,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="4" column="39" lean-forward="true" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="12" column="43" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -804,13 +699,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Adapter/VideoAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="99" column="48" selection-start-line="99" selection-start-column="48" selection-end-line="99" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/Base/DanMu.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="239">
@@ -847,64 +735,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/IjkVideoView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="1299" column="81" selection-start-line="1299" selection-start-column="81" selection-end-line="1299" selection-end-column="81" />
-          <folding>
-            <element signature="e#33970#33971#0" expanded="true" />
-            <element signature="e#33997#33998#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="278" column="42" selection-start-line="278" selection-start-column="42" selection-end-line="278" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#onBackPressed#0;class#PlayActivity#0" />
-            <element signature="method#onConfigurationChanged#0;class#PlayActivity#0" />
-            <element signature="method#findView#0;class#PlayActivity#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="141">
           <caret line="9" column="47" lean-forward="true" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
         </state>
       </provider>
+      <provider editor-type-id="android-manifest" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayerManager.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Utils/ParseHtml.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="103" column="5" lean-forward="true" selection-start-line="103" selection-start-column="5" selection-end-line="103" selection-end-column="5" />
+        <state relative-caret-position="792">
+          <caret line="38" column="70" selection-start-line="38" selection-start-column="70" selection-end-line="38" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#init#0;class#PlayerManager#0" />
-            <element signature="e#2165#2166#0" expanded="true" />
-            <element signature="e#2199#2200#0" expanded="true" />
-            <element signature="method#backPressed#0;class#PlayerManager#0" />
-            <element signature="method#setPlaylist#0;class#PlayerManager#0" />
-            <element signature="e#5210#5211#0" expanded="true" />
-            <element signature="e#5268#5269#0" expanded="true" />
-            <element signature="e#5317#5318#0" expanded="true" />
-            <element signature="e#5348#5349#0" expanded="true" />
+            <element signature="docComment;method#parsedetailinfo#0;class#ParseHtml#0" />
+            <element signature="method#ParsePlayResource#0;class#ParseHtml#0" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/res/layout/activity_player.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="18" column="47" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="47" />
+          <folding>
+            <element signature="e#780#1058#0" />
+            <element signature="e#1090#4305#0" />
+            <element signature="e#4335#4909#0" />
+            <element signature="e#4919#5178#0" />
+            <element signature="e#5189#5572#0" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Adapter/VideoAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="99" column="48" selection-start-line="99" selection-start-column="48" selection-end-line="99" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/IjkVideoView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="1299" column="81" selection-start-line="1299" selection-start-column="81" selection-end-line="1299" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/MyMediaController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23628">
+          <caret line="809" column="68" selection-start-line="809" selection-start-column="68" selection-end-line="809" selection-end-column="68" />
+          <folding>
+            <element signature="docComment;class#MyMediaController#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/res/layout/media_my_controller.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="2607">
+          <caret line="133" column="40" selection-start-line="133" selection-start-column="29" selection-end-line="133" selection-end-column="40" />
+          <folding>
+            <element signature="e#2139#2495#0" />
+            <element signature="e#2530#2977#0" />
+            <element signature="e#2987#4626#0" />
+          </folding>
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/SearchActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="261" column="83" lean-forward="true" selection-start-line="261" selection-start-column="83" selection-end-line="261" selection-end-column="83" />
+        <state relative-caret-position="1782">
+          <caret line="132" column="50" selection-start-line="132" selection-start-column="50" selection-end-line="132" selection-end-column="50" />
           <folding>
             <element signature="method#initPlayResource#0;class#SearchActivity#0" />
             <element signature="method#initSpinnerItems#0;class#SearchActivity#0" />
@@ -916,73 +825,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/Utils/ParseHtml.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_search.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="38" column="70" selection-start-line="38" selection-start-column="70" selection-end-line="38" selection-end-column="70" />
+        <state relative-caret-position="264">
+          <caret line="8" column="37" selection-start-line="8" selection-start-column="37" selection-end-line="8" selection-end-column="37" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_playlive.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="7" column="35" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayerManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2310">
+          <caret line="105" column="34" selection-start-line="105" selection-start-column="34" selection-end-line="105" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="docComment;method#parsedetailinfo#0;class#ParseHtml#0" />
-            <element signature="method#ParsePlayResource#0;class#ParseHtml#0" />
+            <element signature="method#init#0;class#PlayerManager#0" />
+            <element signature="e#2165#2166#0" expanded="true" />
+            <element signature="e#2199#2200#0" expanded="true" />
+            <element signature="method#backPressed#0;class#PlayerManager#0" />
+            <element signature="method#getVideoLink#0;class#PlayerManager#0" />
+            <element signature="method#getCids#0;class#PlayerManager#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/res/layout/media_my_controller.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="133" column="40" selection-start-line="133" selection-start-column="29" selection-end-line="133" selection-end-column="40" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/moviepro/PlayActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7788">
+          <caret line="270" column="69" selection-start-line="270" selection-start-column="69" selection-end-line="270" selection-end-column="69" />
           <folding>
-            <element signature="e#2139#2495#0" />
-            <element signature="e#2530#2977#0" />
-            <element signature="e#2987#4626#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#onBackPressed#0;class#PlayActivity#0" />
+            <element signature="method#onConfigurationChanged#0;class#PlayActivity#0" />
+            <element signature="method#findView#0;class#PlayActivity#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/res/layout/activity_player.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_play.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="92" column="31" selection-start-line="92" selection-start-column="31" selection-end-line="92" selection-end-column="31" />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="47" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="47" />
-          <folding>
-            <element signature="e#780#1058#0" />
-            <element signature="e#1090#4305#0" />
-            <element signature="e#4335#4909#0" />
-            <element signature="e#4919#5178#0" />
-            <element signature="e#5189#5572#0" />
-            <element signature="e#5582#5927#0" />
-            <element signature="e#5937#7834#0" />
-            <element signature="e#7894#8118#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ijkplayer-example/src/main/java/tv/danmaku/ijk/media/example/widget/media/MyMediaController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1746">
-          <caret line="907" column="17" selection-start-line="907" selection-start-column="17" selection-end-line="907" selection-end-column="17" />
-          <folding>
-            <element signature="docComment;class#MyMediaController#0" />
-            <element signature="e#6086#6218#0" expanded="true" />
-            <element signature="e#6217#6218#0" expanded="true" />
-            <element signature="e#12892#12990#0" expanded="true" />
-            <element signature="e#20599#20858#0" expanded="true" />
-            <element signature="e#20857#20858#0" expanded="true" />
-            <element signature="e#24687#24851#0" expanded="true" />
-            <element signature="e#24850#24851#0" expanded="true" />
-            <element signature="e#25691#26529#0" expanded="true" />
-            <element signature="e#26528#26529#0" expanded="true" />
-            <element signature="e#29005#29725#0" expanded="true" />
-            <element signature="e#29724#29725#0" expanded="true" />
-            <element signature="e#30291#30303#0" />
-            <element signature="e#39304#39305#0" expanded="true" />
-            <element signature="e#39328#39329#0" expanded="true" />
-            <element signature="e#38849#38948#0" />
-          </folding>
-        </state>
-      </provider>
     </entry>
   </component>
 </project>

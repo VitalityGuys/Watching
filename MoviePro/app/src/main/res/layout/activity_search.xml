@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@mipmap/bg2">
     <!--搜索框-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,14 +27,15 @@
             android:maxLines="1"
             android:maxLength="15"
             android:gravity="center"
-            android:text="喜羊羊"/>
+            android:text="喜羊羊" />
         <!--搜索按钮-->
         <Button
             android:id="@+id/search_button"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="搜索"/>
+            android:text="搜索"
+            android:background="@null"/>
 
     </LinearLayout>
 
@@ -50,10 +52,10 @@
         <!--            android:layout_height="wrap_content">-->
 
         <!--        </ListView>-->
-
+<!--        android:background="#f0f0f0"-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/videolist"
-            android:background="#f0f0f0"
+            android:background="@null"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
